@@ -1,0 +1,38 @@
+.headerDesign{
+    width: 100vw;
+    height: 12vh;
+
+    background-color: black;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo, .navigationMenu{
+    width: 50vw;
+    height: 12vh;
+
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    justify-content: flex-start;
+    margin-left: 2em;
+}
+
+.navigationMenu{
+    justify-content: flex-end;
+    margin-right: 2em;
+}
+
+.logoImg{
+    width: 20vw;
+    height: 10vh;
+}
+
+.logoImg:hover{
+    box-shadow: 0px 0px 15px 6px #FFFFFF;
+}
