@@ -3,7 +3,9 @@ import { useState, useEffect } from "react"
 import { FormInput } from "../../common/FormInput/FormInput"
 import { FormButton } from "../../common/FormButton/FormButton"
 import { Header } from "../../common/Header/Header"
+import { LoginUser } from "../../services/users/userLogin"
 import { useNavigate } from "react-router-dom"
+import { decodeToken } from "react-jwt"
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -14,7 +16,16 @@ export const Login = () => {
     })
 
     const [success, setSuccess] = useState(false)
+    const [notAllowToLogin, setNotAllowToLogin] = useState(true)
     const [msgSuccess, setMsgSuccess] = useState("")
+
+    useEffect(() => {
+        if(credentials.email !== "" && credentials.password !== ""){
+            setNotAllowToLogin(false)
+        } else {
+            setNotAllowToLogin(true)
+        }
+    }, [credentials])
 
     const loginInputHandler = (e) => {
         setCredentials((prevState) => ({
@@ -25,8 +36,27 @@ export const Login = () => {
 
     const LoginUserCall = async () => {
         try {
-            console.log("Inside")
+            const fetched = await LoginUser(credentials)
+            if(fetched.success === false){
+                throw new Error("Invalid credentials")
+            }
+            setSuccess(true)
+            setMsgSuccess(fetched.message + "\n" + "Redirecting to your profile")
+
+            const decodedToken = decodeToken(fetched.token)
+
+            const passport = {
+                token: fetched.token,
+                decodificado: decodedToken,
+            };
+
+            localStorage.setItem("passport", JSON.stringify(passport));
+            
+            setTimeout(() => {
+                navigate("/");
+              }, 2000);
         } catch (error) {
+            setSuccess(false)
             setMsgSuccess(error.message)
         }
     }
@@ -63,7 +93,7 @@ export const Login = () => {
                     buttonText={"LOGIN"}
                     className={"formButtonDesign"}
                     onClickFunction={LoginUserCall}
-                    disabled={false}
+                    disabled={notAllowToLogin}
                 />
                 <div className={(!success ? "loginError" : "loginSuccess")}>{msgSuccess}</div>
             </div>
