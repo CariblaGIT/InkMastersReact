@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Header } from "../../common/Header/Header"
 import { FormInput } from "../../common/FormInput/FormInput"
 import { FormButton } from "../../common/FormButton/FormButton"
+import { validateRegisterData } from "../../utils/userDataValidations"
 
 export const Register = () => {
     const [user, setUser] = useState({
@@ -12,6 +13,13 @@ export const Register = () => {
         password: ""
     })
 
+    const [userError, setUserError] = useState({
+        fullnameError: "",
+        usernameError: "",
+        emailError: "",
+        passwordError: ""
+    })
+
     const registerInputHandler = (e) => {
         setUser((prevState) => ({
             ...prevState,
@@ -19,10 +27,23 @@ export const Register = () => {
         }))
     }
 
+    const checkInputError = (e) => {
+        const error = validateRegisterData(e.target.name, e.target.value);
+    
+        setUserError((prevState) => ({
+          ...prevState,
+          [e.target.name + "Error"]: error
+        }));
+      };
+
     return (
         <div className="registerDesign">
             <Header/>
             <div className="registerContent">
+                <div className="registerHeader">
+                    <div className="headerText">SIGN UP</div>
+                    <div className="headerLine"></div>
+                </div>
                 <FormInput
                     labelText={"fullname"}
                     className={"formInputField"}
@@ -31,8 +52,9 @@ export const Register = () => {
                     placeholder={"Write your entire name"}
                     value={user.fullname || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={() => console.log("World")}
+                    onBlur={e => checkInputError(e)}
                 />
+                <div className="inputError">{userError.fullnameError}</div>
                 <FormInput
                     labelText={"username"}
                     className={"formInputField"}
@@ -41,8 +63,9 @@ export const Register = () => {
                     placeholder={"Write a username"}
                     value={user.username || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={() => console.log("World")}
+                    onBlur={e => checkInputError(e)}
                 />
+                <div className="inputError">{userError.usernameError}</div>
                 <FormInput
                     labelText={"email"}
                     className={"formInputField"}
@@ -51,8 +74,9 @@ export const Register = () => {
                     placeholder={"Write an email"}
                     value={user.email || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={() => console.log("World")}
+                    onBlur={e => checkInputError(e)}
                 />
+                <div className="inputError">{userError.emailError}</div>
                 <FormInput
                     labelText={"password"}
                     className={"formInputField"}
@@ -61,8 +85,9 @@ export const Register = () => {
                     placeholder={"Write a password"}
                     value={user.password || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={() => console.log("World")}
+                    onBlur={e => checkInputError(e)}
                 />
+                <div className="inputError">{userError.passwordError}</div>
                 <FormButton
                     buttonText={"REGISTER"}
                 />
