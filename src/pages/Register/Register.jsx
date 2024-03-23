@@ -1,9 +1,10 @@
 import "./Register.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "../../common/Header/Header"
 import { FormInput } from "../../common/FormInput/FormInput"
 import { FormButton } from "../../common/FormButton/FormButton"
 import { validateRegisterData } from "../../utils/userDataValidations"
+import { RegisterUser } from "../../services/users/userRegister"
 
 export const Register = () => {
     const [user, setUser] = useState({
@@ -20,6 +21,25 @@ export const Register = () => {
         passwordError: ""
     })
 
+    const [notAllowToRegister, setNotAllowToRegister] = useState(true)
+
+    const [msgError, setMsgError] = useState("")
+
+    useEffect(() => {
+        if(user.fullname !== "" && user.username !== "" && user.email !== "" && user.password !== ""){
+            if((userError.fullnameError === undefined) && 
+            (userError.usernameError === undefined) && 
+            (userError.emailError === undefined) && 
+            (userError.passwordError === undefined)){
+                setNotAllowToRegister(false)
+            } else {
+                setNotAllowToRegister(true)
+            }
+        } else {
+            setNotAllowToRegister(true)
+        }
+    }, [userError])
+
     const registerInputHandler = (e) => {
         setUser((prevState) => ({
             ...prevState,
@@ -31,10 +51,19 @@ export const Register = () => {
         const error = validateRegisterData(e.target.name, e.target.value);
     
         setUserError((prevState) => ({
-          ...prevState,
-          [e.target.name + "Error"]: error
+            ...prevState,
+            [e.target.name + "Error"]: error
         }));
-      };
+    };
+
+    const RegisterUserCall = async () => {
+        try {
+            const fetched = await RegisterUser(user)
+            console.log(fetched)
+        } catch (error) {
+            setMsgError(error.message)
+        }
+    }
 
     return (
         <div className="registerDesign">
@@ -90,7 +119,11 @@ export const Register = () => {
                 <div className="inputError">{userError.passwordError}</div>
                 <FormButton
                     buttonText={"REGISTER"}
+                    className={"formButtonDesign"}
+                    onClickFunction={RegisterUserCall}
+                    disabled={notAllowToRegister}
                 />
+                <div className="registerError">{msgError}</div>
             </div>
         </div>
     )

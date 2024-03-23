@@ -1,9 +1,9 @@
 import "./FormButton.css"
 
-export const FormButton = ({buttonText}) => {
+export const FormButton = ({buttonText, className, onClickFunction, disabled}) => {
     return (
-        <div className="formButtonDesign">
+        <button className={className} onClick={onClickFunction} disabled={disabled}>
             {buttonText}
-        </div>
+        </button>
     )
 }
