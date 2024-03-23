@@ -1,6 +1,7 @@
 
 .formButtonDesign {
     color: #fff;
+    font-weight: bold;
     user-select: none;
     border-style: none;
     outline: none;
@@ -8,7 +9,7 @@
     padding: 0.8em 1em;
     margin: 0.5em;
     border: 0.25em solid transparent;
-    background-image: linear-gradient(#000, #000), linear-gradient(40deg, #fff, #bfbfbf, #585757, #404040, #000000, #404040, #585757, #bfbfbf, #fff);
+    background-image: linear-gradient(#000, #000), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
     background-origin: border-box;
     background-clip: padding-box, border-box;
     border-radius: 0.5em;
@@ -19,7 +20,7 @@
 
 .formButtonDesign:hover{
     color: #000000;
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #000000, #404040, #585757, #bfbfbf, #fff, #bfbfbf, #585757, #404040, #000000);
+    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #000000, #2c2c2c, #404040, #585757, #9d9b9b, #bfbfbf, #fff);
     transition: 1s;
     cursor: pointer;
 }
