@@ -15,6 +15,34 @@
     background-color: #7f7f7f;
 
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeHeader, .homeSubHeader{
+    color:#fff;
+    font-size: large;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeHeader{
+    font-weight: 700;
+}
+
+.homeSubHeader{
+    font-weight: 300;
+}
+
+.homeServices{
+    height: 60vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }

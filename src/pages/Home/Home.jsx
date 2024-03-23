@@ -6,7 +6,17 @@ export const Home = () => {
         <div className="homeDesign">
             <Header/>
             <div className="homeContent">
-            Soy la vista de home
+                <div className="homeTitle">
+                    <div className="homeHeader">
+                        Welcome to InkMasters
+                    </div>
+                    <div className="homeSubHeader">
+                        Your desired place to make your tatoos and other cosmetics
+                    </div>
+                </div>
+                <div className="homeServices">
+                    Here will go the services
+                </div>
             </div>
         </div>
     )
