@@ -46,14 +46,25 @@
     align-items: center;
 }
 
-.inputError, .registerError{
-    color: red;
+.inputError, .registerError, .registerSuccess{
     font-weight: bold;
-
-    margin: 0.3em;
-    height: 1em;
+    white-space: pre;
+    margin-top: 0.3em;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-.inputError:empty, .registerError:empty{
+.inputError, .registerError{
+    color: red;
+}
+
+.registerSuccess{
+    color: green;
+}
+
+.inputError:empty, .registerError:empty, .registerSuccess:empty{
     display: none;
 }

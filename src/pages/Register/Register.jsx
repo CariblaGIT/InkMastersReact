@@ -5,8 +5,11 @@ import { FormInput } from "../../common/FormInput/FormInput"
 import { FormButton } from "../../common/FormButton/FormButton"
 import { validateRegisterData } from "../../utils/userDataValidations"
 import { RegisterUser } from "../../services/users/userRegister"
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+    const navigate = useNavigate();
+
     const [user, setUser] = useState({
         fullname: "",
         username: "",
@@ -22,8 +25,8 @@ export const Register = () => {
     })
 
     const [notAllowToRegister, setNotAllowToRegister] = useState(true)
-
-    const [msgError, setMsgError] = useState("")
+    const [success, setSuccess] = useState(false)
+    const [msgSuccess, setMsgSuccess] = useState("")
 
     useEffect(() => {
         if(user.fullname !== "" && user.username !== "" && user.email !== "" && user.password !== ""){
@@ -59,9 +62,16 @@ export const Register = () => {
     const RegisterUserCall = async () => {
         try {
             const fetched = await RegisterUser(user)
-            console.log(fetched)
+            if(fetched.success === false){
+                throw new Error(fetched.error)
+            }
+            setSuccess(true)
+            setMsgSuccess(fetched.message + "\n" + "Redirecting to Login")
+            setTimeout(() => {
+                navigate("/login");
+              }, 2000);
         } catch (error) {
-            setMsgError(error.message)
+            setMsgSuccess(error.message)
         }
     }
 
@@ -123,7 +133,7 @@ export const Register = () => {
                     onClickFunction={RegisterUserCall}
                     disabled={notAllowToRegister}
                 />
-                <div className="registerError">{msgError}</div>
+                <div className={(!success ? "registerError" : "registerSuccess")}>{msgSuccess}</div>
             </div>
         </div>
     )
