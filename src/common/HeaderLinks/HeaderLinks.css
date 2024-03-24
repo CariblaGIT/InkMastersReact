@@ -2,6 +2,7 @@
     color: white;
     font-weight: bold;
     margin: 1em;
+    user-select: none;
     
     transition: 0.2s;
   }

@@ -20,6 +20,7 @@
     color:#fff;
     font-size: large;
     font-weight: 700;
+    user-select: none;
     width: 10vw;
     height: 5vh;
     display: flex;
@@ -29,6 +30,7 @@
 
 .headerLine{
     background:#fff;
+    user-select: none;
     width: 14vw;
     height: 1vh;
     border-radius: 0.5em;

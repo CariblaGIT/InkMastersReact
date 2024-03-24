@@ -23,6 +23,7 @@
 .homeHeader, .homeSubHeader{
     color:#fff;
     font-size: large;
+    user-select: none;
     height: fit-content;
     display: flex;
     align-items: center;
