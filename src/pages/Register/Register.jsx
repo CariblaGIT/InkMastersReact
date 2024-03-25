@@ -89,6 +89,7 @@ export const Register = () => {
                     type={"text"}
                     name={"fullname"}
                     placeholder={"Write your entire name"}
+                    disabled={"false"}
                     value={user.fullname || ""}
                     onChange={e => registerInputHandler(e)}
                     onBlur={e => checkInputError(e)}
@@ -100,6 +101,7 @@ export const Register = () => {
                     type={"text"}
                     name={"username"}
                     placeholder={"Write a username"}
+                    disabled={"false"}
                     value={user.username || ""}
                     onChange={e => registerInputHandler(e)}
                     onBlur={e => checkInputError(e)}
@@ -111,6 +113,7 @@ export const Register = () => {
                     type={"email"}
                     name={"email"}
                     placeholder={"Write an email"}
+                    disabled={"false"}
                     value={user.email || ""}
                     onChange={e => registerInputHandler(e)}
                     onBlur={e => checkInputError(e)}

@@ -5,6 +5,8 @@ import "./Profile.css"
 import { GetProfile } from "../../services/users/userGetProfile"
 import { FormInput } from "../../common/FormInput/FormInput"
 import { publicServer } from "../../services/config"
+import { FormButton } from "../../common/FormButton/FormButton"
+import { validateRegisterData } from "../../utils/userDataValidations"
 
 export const Profile = () => {
     const passport = JSON.parse(localStorage.getItem("passport"))
@@ -12,6 +14,7 @@ export const Profile = () => {
 
     const [tokenStorage, setTokenStorage] = useState(passport?.token)
     const [loadedData, setLoadedData] = useState(false)
+    const [write, setWrite] = useState("disabled");
 
     const [user, setUser] = useState({
         fullname: "",
@@ -35,7 +38,12 @@ export const Profile = () => {
     }
 
     const checkInputError = (e) => {
-        //a gusto del consumidor....
+        const error = validateRegisterData(e.target.name, e.target.value);
+    
+        setUserError((prevState) => ({
+            ...prevState,
+            [e.target.name + "Error"]: error
+        }));
     };
 
     useEffect(() => {
@@ -68,6 +76,15 @@ export const Profile = () => {
         }
     }, [user]);
 
+    const updateUserData = async () => {
+        try {
+            console.log("Im saving data...")
+            setWrite("disabled")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className="profileDesign">
             <Header/>
@@ -79,6 +96,7 @@ export const Profile = () => {
                     type={"text"}
                     name={"fullname"}
                     placeholder={"Write your entire name"}
+                    disabled={write}
                     value={user.fullname || ""}
                     onChange={e => profileInputHandler(e)}
                     onBlur={e => checkInputError(e)}
@@ -90,6 +108,7 @@ export const Profile = () => {
                     type={"text"}
                     name={"username"}
                     placeholder={"Write a username"}
+                    disabled={write}
                     value={user.username || ""}
                     onChange={e => profileInputHandler(e)}
                     onBlur={e => checkInputError(e)}
@@ -101,11 +120,17 @@ export const Profile = () => {
                     type={"email"}
                     name={"email"}
                     placeholder={"Write an email"}
+                    disabled={write}
                     value={user.email || ""}
                     onChange={e => profileInputHandler(e)}
                     onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.emailError}</div>
+                <FormButton
+                    buttonText={write === "" ? "SAVE" : "EDIT"}
+                    className={write === "" ? "formButtonDesignEdit" : "formButtonDesign"}
+                    onClickFunction={write === "" ? updateUserData : ()=> setWrite("")}
+                />
             </div>
         </div>
     )

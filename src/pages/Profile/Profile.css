@@ -25,3 +25,18 @@
     width: 7em;
     margin-bottom: 1em;
 }
+
+.inputError{
+    font-weight: bold;
+    white-space: pre;
+    margin-top: 0.3em;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.inputError{
+    color: red;
+}

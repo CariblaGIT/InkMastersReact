@@ -75,6 +75,7 @@ export const Login = () => {
                     type={"email"}
                     name={"email"}
                     placeholder={"Write your email"}
+                    disabled={"false"}
                     value={credentials.email || ""}
                     onChange={e => loginInputHandler(e)}
                     onBlur={() => {}}
@@ -85,6 +86,7 @@ export const Login = () => {
                     type={"password"}
                     name={"password"}
                     placeholder={"Write your password"}
+                    disabled={"false"}
                     value={credentials.password || ""}
                     onChange={e => loginInputHandler(e)}
                     onBlur={() => {}}
