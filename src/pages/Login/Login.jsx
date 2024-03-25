@@ -47,13 +47,13 @@ export const Login = () => {
 
             const passport = {
                 token: fetched.token,
-                decodificado: decodedToken,
+                decoded: decodedToken,
             };
 
             localStorage.setItem("passport", JSON.stringify(passport));
             
             setTimeout(() => {
-                navigate("/");
+                navigate("/appointments");
               }, 2000);
         } catch (error) {
             setSuccess(false)
