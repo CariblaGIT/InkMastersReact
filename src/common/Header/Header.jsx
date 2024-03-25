@@ -1,6 +1,7 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import "./Header.css"
 import logo from '../../assets/logo.png'
+import { publicServer } from "../../services/config"
 
 import { useNavigate } from "react-router-dom"
 import { HeaderLinks } from "../HeaderLinks/HeaderLinks"
@@ -37,7 +38,7 @@ export const Header = () => {
                     <>
                         <Dropdown>
                             <Dropdown.Toggle className="profileDropdown" id="dropdown-basic">
-                                <img className="avatarImg" src={`https://inkmasters-dev-tmge.2.us-1.fl0.io/public/${passport.decoded.avatar}`}/>
+                                <img className="avatarImg" src={`${publicServer}public/${passport.decoded.avatar}`}/>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu className="menuDropdown">

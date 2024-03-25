@@ -1,5 +1,4 @@
-const root = "https://inkmasters-dev-tmge.2.us-1.fl0.io/api/";
-//const root = "https://localhost:4000/api/";
+import { server } from "../config"
 
 export const GetServices = async () => {
     const options = {
@@ -10,7 +9,7 @@ export const GetServices = async () => {
     };
 
     try {
-        const response = await fetch(`${root}services/`, options);
+        const response = await fetch(`${server}services/`, options);
         const data = await response.json();
 
         if (!data.success) {

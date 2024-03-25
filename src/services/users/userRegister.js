@@ -1,5 +1,4 @@
-const root = "https://inkmasters-dev-tmge.2.us-1.fl0.io/api/";
-//const root = "https://localhost:4000/api/";
+import { server } from "../config"
 
 export const RegisterUser = async (user) => {
     const options = {
@@ -11,7 +10,7 @@ export const RegisterUser = async (user) => {
     };
 
     try {
-        const response = await fetch(`${root}auth/register`, options);
+        const response = await fetch(`${server}auth/register`, options);
         const data = await response.json();
 
         if (!data.success) {
