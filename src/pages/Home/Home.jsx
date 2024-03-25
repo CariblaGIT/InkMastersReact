@@ -1,7 +1,32 @@
-import { Header } from "../../common/Header/Header"
 import "./Home.css"
+import { useState, useEffect } from "react"
+import { Header } from "../../common/Header/Header"
+import { GetServices } from "../../services/services/getServices"
 
 export const Home = () => {
+    const [services, setServices] = useState([])
+    const [loadedData, setLoadedData] = useState(false)
+
+    useEffect(() => {
+        const getServices = async () => {
+            try {
+                const fetched = await GetServices();
+                setLoadedData(true);
+                setServices(fetched.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        if (!loadedData) {
+            getServices();
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log(services);
+    }, [services]);
+
     return (
         <div className="homeDesign">
             <Header/>
