@@ -1,7 +1,9 @@
 import "./Home.css"
+import 'bootstrap/dist/css/bootstrap.css'
 import { useState, useEffect } from "react"
 import { Header } from "../../common/Header/Header"
 import { GetServices } from "../../services/services/getServices"
+import Carousel from 'react-bootstrap/Carousel';
 
 export const Home = () => {
     const [services, setServices] = useState([])
@@ -23,10 +25,6 @@ export const Home = () => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log(services);
-    }, [services]);
-
     return (
         <div className="homeDesign">
             <Header/>
@@ -40,7 +38,24 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className="homeServices">
-                    Here will go the services
+                        {!loadedData ? (
+                            <div>CARGANDO</div>
+                        ) : (
+                            <Carousel>
+                                {services.map((item) => {
+                                    const url = `../../../public/services/${item.id}.jpg`
+                                    return (
+                                        <Carousel.Item key={item.id}>
+                                        <img src={url} className="serviceImg"/>
+                                        <Carousel.Caption>
+                                            <h3>{item.serviceName}</h3>
+                                            <p>{item.description}</p>
+                                        </Carousel.Caption>
+                                        </Carousel.Item>
+                                    );
+                                })}
+                            </Carousel> 
+                        )}
                 </div>
             </div>
         </div>
