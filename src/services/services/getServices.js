@@ -1,7 +1,7 @@
 const root = "https://inkmasters-dev-tmge.2.us-1.fl0.io/api/";
 //const root = "https://localhost:4000/api/";
 
-export const GetServices = async (user) => {
+export const GetServices = async () => {
     const options = {
         method: "GET",
         headers: {

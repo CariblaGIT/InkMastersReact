@@ -41,9 +41,15 @@
 .homeServices{
     height: 60vh;
     width: 100vw;
+    margin-top: 3em;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.serviceImg{
+    height: 70vh;
+    width: 80vw;
 }
