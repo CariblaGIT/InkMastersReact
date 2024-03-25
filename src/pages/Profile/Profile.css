@@ -40,3 +40,28 @@
 .inputError{
     color: red;
 }
+
+.iconImg{
+    background-color: #9d9b9b;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 2em;
+    top: -2em;
+    transition: 0.5s;
+}
+
+.iconImg:hover{
+    background-color: #585757;
+    color: white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.fileSelector{
+    display: none;
+}

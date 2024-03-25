@@ -90,6 +90,16 @@ export const Profile = () => {
             <Header/>
             <div className="profileContent">
                 <img className="avatarImgProfile" src={`${publicServer}public/${passport.decoded.avatar}`}/>
+                {write !== "disabled" ? (
+                    <>
+                    <label htmlFor="file" className={"iconImg"}>
+                        <i className="bi bi-images"></i>
+                    </label>
+                    <input id="file" type="file" name="avatar" disabled={write} className={"fileSelector"}/>
+                    </>
+                ) : (
+                    <></>
+                )}
                 <FormInput
                     labelText={"fullname"}
                     className={"formInputField"}
