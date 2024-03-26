@@ -7,7 +7,7 @@
     outline: none;
     height: fit-content;
     padding: 0.8em 1em;
-    margin-top: 1em;
+    margin: 1em;
     border: 0.25em solid transparent;
     background-image: linear-gradient(#000, #000), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
     background-origin: border-box;
@@ -27,7 +27,7 @@
   outline: none;
   height: fit-content;
   padding: 0.8em 1em;
-  margin-top: 1em;
+  margin: 1em;
   border: 0.25em solid transparent;
   background-image: linear-gradient(green, green), linear-gradient(40deg, #00ff00, #00ec00, #00e100, #02cd02, #02ad02, green);
   background-origin: border-box;

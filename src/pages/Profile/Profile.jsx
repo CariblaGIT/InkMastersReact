@@ -7,6 +7,7 @@ import { FormInput } from "../../common/FormInput/FormInput"
 import { publicServer } from "../../services/config"
 import { FormButton } from "../../common/FormButton/FormButton"
 import { validateRegisterData } from "../../utils/userDataValidations"
+import { UpdateProfileWithAvatar, UpdateProfileWithoutAvatar } from "../../services/users/userUpdateProfile"
 
 export const Profile = () => {
     const passport = JSON.parse(localStorage.getItem("passport"))
@@ -14,7 +15,9 @@ export const Profile = () => {
 
     const [tokenStorage, setTokenStorage] = useState(passport?.token)
     const [loadedData, setLoadedData] = useState(false)
-    const [write, setWrite] = useState("disabled");
+    const [write, setWrite] = useState("disabled")
+    const [avatarToUpload, setAvatarToUpload] = useState(undefined);
+    const [avatar, setAvatar] = useState(publicServer + "public/" + passport?.decoded.avatar)
 
     const [user, setUser] = useState({
         fullname: "",
@@ -44,6 +47,12 @@ export const Profile = () => {
             ...prevState,
             [e.target.name + "Error"]: error
         }));
+    };
+
+    const handleFileChange = (e) => {
+        if (e.target.files) {
+            setAvatarToUpload(e.target.files[0])
+        }
     };
 
     useEffect(() => {
@@ -78,8 +87,34 @@ export const Profile = () => {
 
     const updateUserData = async () => {
         try {
-            console.log("Im saving data...")
-            setWrite("disabled")
+            if(avatarToUpload === undefined){
+                const fetched = await UpdateProfileWithoutAvatar(tokenStorage, user) 
+                console.log(fetched, "SIN AVATAR")
+                setUser({
+                    fullname: fetched.data.fullname,
+                    username: fetched.data.username,
+                    email: fetched.data.email
+                })
+                
+                setWrite("disabled")
+            } else {
+                const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload) 
+                console.log(fetched, "CON AVATAR")
+                setUser({
+                    fullname: fetched.data.fullname,
+                    username: fetched.data.username,
+                    email: fetched.data.email,
+                    avatar: fetched.data.avatar
+                })
+                const newAvatar = fetched.data.avatar
+                setAvatarToUpload(undefined)
+                setAvatar(publicServer + "public/" + newAvatar)
+                const arrayPassport = localStorage.getItem("passport");
+                let passportParsed = JSON.parse(arrayPassport);
+                passportParsed["decoded"]["avatar"] = newAvatar;
+                localStorage.setItem("passport", JSON.stringify(passportParsed));
+                setWrite("disabled")
+            }
         } catch (error) {
             console.log(error)
         }
@@ -89,13 +124,13 @@ export const Profile = () => {
         <div className="profileDesign">
             <Header/>
             <div className="profileContent">
-                <img className="avatarImgProfile" src={`${publicServer}public/${passport.decoded.avatar}`}/>
+                <img className="avatarImgProfile" src={avatar}/>
                 {write !== "disabled" ? (
                     <>
                     <label htmlFor="file" className={"iconImg"}>
                         <i className="bi bi-images"></i>
                     </label>
-                    <input id="file" type="file" name="avatar" disabled={write} className={"fileSelector"}/>
+                    <input id="file" type="file" name="avatar" disabled={write} className={"fileSelector"} onChange={handleFileChange}/>
                     </>
                 ) : (
                     <></>
@@ -136,11 +171,22 @@ export const Profile = () => {
                     onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.emailError}</div>
-                <FormButton
-                    buttonText={write === "" ? "SAVE" : "EDIT"}
-                    className={write === "" ? "formButtonDesignEdit" : "formButtonDesign"}
-                    onClickFunction={write === "" ? updateUserData : ()=> setWrite("")}
-                />
+                <div className="interactionButtons">
+                    {write === "" ? (
+                        <FormButton
+                            buttonText={"RETURN"}
+                            className={"formButtonDesign"}
+                            onClickFunction={() => setWrite("disabled")}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                    <FormButton
+                        buttonText={write === "" ? "SAVE" : "EDIT"}
+                        className={write === "" ? "formButtonDesignEdit" : "formButtonDesign"}
+                        onClickFunction={write === "" ? updateUserData : ()=> setWrite("")}
+                    />
+                </div>
             </div>
         </div>
     )
