@@ -5,16 +5,19 @@ import "./UserAppointments.css"
 import { GetAppointments } from "../../services/appointments/getAppointments"
 import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment"
 import { GetServices } from "../../services/services/getServices";
+import { GetTattoers } from "../../services/users/userGetTattoers";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [userAppointments, setUserAppointments] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
-    const [loadedDataFromServices, setLoadedDataFromServices] = useState(false);
+    const [loadedServicesData, setLoadedServicesData] = useState(false);
+    const [loadedTattoersData, setLoadedTattoersData] = useState(false);
     const [anyAppointment, setAnyAppointment] = useState(true);
     const [modalShow, setModalShow] = useState(false);
     const [services, setServices] = useState([]);
+    const [tattooers, setTattoers] = useState([]);
 
     const navigate = useNavigate()
 
@@ -38,18 +41,29 @@ export const UserAppointments = () => {
             }
         }
 
-        const getNewAppointmentsData = async () => {
+        const getServicesData = async () => {
             try {
-                const fetched = await GetServices();
-                setLoadedDataFromServices(true);
-                setServices(fetched.data);
+                const fetchedServices = await GetServices();
+                setLoadedServicesData(true);
+                setServices(fetchedServices.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        const getTattooersData = async () => {
+            try {
+                const fetchedTattoers = await GetTattoers(tokenStorage);
+                setLoadedTattoersData(true);
+                setTattoers(fetchedTattoers.data);
             } catch (error) {
                 console.log(error);
             }
         }
 
         if (!loadedData) { getUserAppointments() };
-        if (!loadedDataFromServices) { getNewAppointmentsData() };
+        if (!loadedServicesData) { getServicesData() };
+        if (!loadedTattoersData) { getTattooersData() };
     }, [])
 
     const popupAddAppointment = () => {
@@ -92,6 +106,7 @@ export const UserAppointments = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 services={services}
+                tattooers={tattooers}
             />
         </div>
     )

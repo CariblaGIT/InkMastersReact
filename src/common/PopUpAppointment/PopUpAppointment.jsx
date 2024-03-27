@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { FormInput } from "../FormInput/FormInput"
-import { FormDropdownServices } from "../FormDropdownServices/FormDropdownServices"
+import { FormDropdown } from "../FormDropdown/FormDropdown"
 
 export const PopUpAppointment = (props) => {
     const [actualDate, setActualDate] = useState("");
@@ -51,8 +51,13 @@ export const PopUpAppointment = (props) => {
                         onChange={e => console.log("Hey")}
                         onBlur={e => console.log("Hey")}
                     />
-                    <FormDropdownServices
+                    <FormDropdown
                         array={props.services}
+                        dataType={"services"}
+                    />
+                    <FormDropdown
+                        array={props.tattooers}
+                        dataType={"tattooers"}
                     />
                 </div>
             </Modal.Body>
