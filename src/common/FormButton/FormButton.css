@@ -39,7 +39,7 @@
   pointer-events: all;
 }
 
-.formButtonDesign:disabled{
+.formButtonDesign:disabled, .formButtonDesignEdit:disabled{
   color: #404040;
   background-image: linear-gradient(#000, #000);
   pointer-events: none;

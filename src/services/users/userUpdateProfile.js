@@ -47,8 +47,6 @@ export const UpdateProfileWithAvatar = async (token, user, avatarFile) => {
 
         const data = await response.json();
 
-        console.log(data)
-
         if (!data.success) {
             throw new Error(data.message);
         }

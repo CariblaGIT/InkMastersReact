@@ -24,6 +24,8 @@
     height: 7em;
     width: 7em;
     margin-bottom: 1em;
+    border-radius: 50%;
+    background-color: #fff;
 }
 
 .inputError, .fileRetrievedMsg{

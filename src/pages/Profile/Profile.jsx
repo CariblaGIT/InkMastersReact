@@ -26,9 +26,16 @@ export const Profile = () => {
         avatar: ""
     })
 
+    const [userPrevToUpdate, setUserPrevToUpdate] = useState({
+        fullname: "",
+        username: "",
+        email: "",
+        avatar: ""
+    })
+
     const [userError, setUserError] = useState({
         fullnameError: "",
-        surnameError: "",
+        usernameError: "",
         emailError: "",
         avatarError: ""
     })
@@ -88,8 +95,14 @@ export const Profile = () => {
         }
     }, [user]);
 
+    const activateUpdate = () => {
+        setWrite("")
+        setUserPrevToUpdate(user)
+    }
+
     const cancelUpdateProfile = () => {
         setWrite("disabled")
+        setUser(userPrevToUpdate)
         setAvatarToUpload(undefined)
         setMsgUploadedFile("")
     }
@@ -103,16 +116,19 @@ export const Profile = () => {
                     username: fetched.data.username,
                     email: fetched.data.email
                 })
+                setUserPrevToUpdate(user)
                 
                 setWrite("disabled")
             } else {
                 const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload)
-                setUser({
+                const newUserData = {
                     fullname: fetched.data.fullname,
                     username: fetched.data.username,
                     email: fetched.data.email,
                     avatar: fetched.data.avatar
-                })
+                }
+                setUser(newUserData)
+                setUserPrevToUpdate(newUserData)
                 const newAvatar = fetched.data.avatar
                 setAvatarToUpload(undefined)
                 setAvatar(publicServer + "public/" + newAvatar)
@@ -193,7 +209,7 @@ export const Profile = () => {
                     <FormButton
                         buttonText={write === "" ? "SAVE" : "EDIT"}
                         className={write === "" ? "formButtonDesignEdit" : "formButtonDesign"}
-                        onClickFunction={write === "" ? updateUserData : ()=> setWrite("")}
+                        onClickFunction={write === "" ? updateUserData : activateUpdate}
                     />
                 </div>
             </div>
