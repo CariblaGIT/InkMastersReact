@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Header } from "../../common/Header/Header"
 import { useNavigate } from "react-router-dom"
 import "./UserAppointments.css"
-import { GetAppointments } from "../../services/appointments/getAppointments";
+import { GetAppointments } from "../../services/appointments/getAppointments"
+import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment"
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -10,6 +11,7 @@ export const UserAppointments = () => {
     const [userAppointments, setUserAppointments] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
     const [anyAppointment, setAnyAppointment] = useState(true);
+    const [modalShow, setModalShow] = useState(false);
 
     const navigate = useNavigate()
 
@@ -32,13 +34,14 @@ export const UserAppointments = () => {
                 console.log(error);
             }
         }
-
         if (!loadedData) {
             getUserAppointments();
         }
-
-        console.log(userAppointments)
     }, [userAppointments])
+
+    const popupAddAppointment = () => {
+        setModalShow(true)
+    }
 
     return (
         <div className="userAppointmentsDesign">
@@ -48,12 +51,34 @@ export const UserAppointments = () => {
                     <>CARGANDO</>
                 ) : (
                     anyAppointment === true ? (
-                        <>NO APPOINTMENTS</>
+                        <>
+                            <div className="buttonsSection">
+                                <button className="newAppointmentBtn" onClick={popupAddAppointment}>
+                                    New <i className="bi bi-calendar-plus calendarIcon"></i>
+                                </button>
+                            </div>
+                            <div className="appointmentsContent">
+                                NO APPOINTMENTS
+                            </div>
+                        </>
                     ) : (
-                        <>APPOINTMENTS</>
+                        <>
+                            <div className="buttonsSection">
+                                <button className="newAppointmentBtn" onClick={popupAddAppointment}>
+                                    New <i className="bi bi-calendar-plus calendarIcon"></i>
+                                </button>
+                            </div>
+                            <div className="appointmentsContent">
+                                APPOINTMENTS
+                            </div>
+                        </>
                     )
                 )}
             </div>
+            <PopUpAppointment
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </div>
     )
 }
