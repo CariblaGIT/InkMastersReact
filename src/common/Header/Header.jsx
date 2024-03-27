@@ -38,7 +38,7 @@ export const Header = () => {
                     <>
                         <Dropdown>
                             <Dropdown.Toggle className="profileDropdown" id="dropdown-basic">
-                                <img className="avatarImg" src={`${publicServer}public/${passport.decoded.avatar}`}/>
+                                <img className="avatarImg" src={`${publicServer}${passport.decoded.avatar}`}/>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu className="menuDropdown">

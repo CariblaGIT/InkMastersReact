@@ -17,7 +17,7 @@ export const Profile = () => {
     const [loadedData, setLoadedData] = useState(false)
     const [write, setWrite] = useState("disabled")
     const [avatarToUpload, setAvatarToUpload] = useState(undefined);
-    const [avatar, setAvatar] = useState(publicServer + "public/" + passport?.decoded.avatar)
+    const [avatar, setAvatar] = useState(publicServer + passport?.decoded.avatar)
 
     const [user, setUser] = useState({
         fullname: "",
@@ -135,7 +135,7 @@ export const Profile = () => {
                 setUserPrevToUpdate(newUserData)
                 const newAvatar = fetched.data.avatar
                 setAvatarToUpload(undefined)
-                setAvatar(publicServer + "public/" + newAvatar)
+                setAvatar(publicServer + newAvatar)
                 const arrayPassport = localStorage.getItem("passport")
                 let passportParsed = JSON.parse(arrayPassport)
                 passportParsed["decoded"]["avatar"] = newAvatar
