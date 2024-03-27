@@ -33,6 +33,8 @@ export const Profile = () => {
         avatarError: ""
     })
 
+    const [msgUploadedFile, setMsgUploadedFile] = useState("")
+
     const profileInputHandler = (e) => {
         setUser((prevState) => ({
           ...prevState,
@@ -52,6 +54,7 @@ export const Profile = () => {
     const handleFileChange = (e) => {
         if (e.target.files) {
             setAvatarToUpload(e.target.files[0])
+            setMsgUploadedFile("File retrieved, save to change avatar")
         }
     };
 
@@ -85,11 +88,16 @@ export const Profile = () => {
         }
     }, [user]);
 
+    const cancelUpdateProfile = () => {
+        setWrite("disabled")
+        setAvatarToUpload(undefined)
+        setMsgUploadedFile("")
+    }
+
     const updateUserData = async () => {
         try {
             if(avatarToUpload === undefined){
-                const fetched = await UpdateProfileWithoutAvatar(tokenStorage, user) 
-                console.log(fetched, "SIN AVATAR")
+                const fetched = await UpdateProfileWithoutAvatar(tokenStorage, user)
                 setUser({
                     fullname: fetched.data.fullname,
                     username: fetched.data.username,
@@ -98,8 +106,7 @@ export const Profile = () => {
                 
                 setWrite("disabled")
             } else {
-                const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload) 
-                console.log(fetched, "CON AVATAR")
+                const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload)
                 setUser({
                     fullname: fetched.data.fullname,
                     username: fetched.data.username,
@@ -109,11 +116,12 @@ export const Profile = () => {
                 const newAvatar = fetched.data.avatar
                 setAvatarToUpload(undefined)
                 setAvatar(publicServer + "public/" + newAvatar)
-                const arrayPassport = localStorage.getItem("passport");
-                let passportParsed = JSON.parse(arrayPassport);
-                passportParsed["decoded"]["avatar"] = newAvatar;
-                localStorage.setItem("passport", JSON.stringify(passportParsed));
+                const arrayPassport = localStorage.getItem("passport")
+                let passportParsed = JSON.parse(arrayPassport)
+                passportParsed["decoded"]["avatar"] = newAvatar
+                localStorage.setItem("passport", JSON.stringify(passportParsed))
                 setWrite("disabled")
+                setMsgUploadedFile("")
             }
         } catch (error) {
             console.log(error)
@@ -135,6 +143,7 @@ export const Profile = () => {
                 ) : (
                     <></>
                 )}
+                <div className="fileRetrievedMsg">{msgUploadedFile}</div>
                 <FormInput
                     labelText={"fullname"}
                     className={"formInputField"}
@@ -176,7 +185,7 @@ export const Profile = () => {
                         <FormButton
                             buttonText={"RETURN"}
                             className={"formButtonDesign"}
-                            onClickFunction={() => setWrite("disabled")}
+                            onClickFunction={cancelUpdateProfile}
                         />
                     ) : (
                         <></>
