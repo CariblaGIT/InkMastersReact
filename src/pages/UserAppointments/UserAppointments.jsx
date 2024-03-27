@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom"
 import "./UserAppointments.css"
 import { GetAppointments } from "../../services/appointments/getAppointments"
 import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment"
+import { GetServices } from "../../services/services/getServices";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [userAppointments, setUserAppointments] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
+    const [loadedDataFromServices, setLoadedDataFromServices] = useState(false);
     const [anyAppointment, setAnyAppointment] = useState(true);
     const [modalShow, setModalShow] = useState(false);
+    const [services, setServices] = useState([]);
 
     const navigate = useNavigate()
 
@@ -34,10 +37,20 @@ export const UserAppointments = () => {
                 console.log(error);
             }
         }
-        if (!loadedData) {
-            getUserAppointments();
+
+        const getNewAppointmentsData = async () => {
+            try {
+                const fetched = await GetServices();
+                setLoadedDataFromServices(true);
+                setServices(fetched.data);
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }, [userAppointments])
+
+        if (!loadedData) { getUserAppointments() };
+        if (!loadedDataFromServices) { getNewAppointmentsData() };
+    }, [])
 
     const popupAddAppointment = () => {
         setModalShow(true)
@@ -78,6 +91,7 @@ export const UserAppointments = () => {
             <PopUpAppointment
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                services={services}
             />
         </div>
     )
