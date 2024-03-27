@@ -45,3 +45,7 @@
 .formInputField:hover{
     background-position: 100% 0;
 }
+
+.formInputField:disabled{
+    background-image: linear-gradient(#000, #000);
+}
