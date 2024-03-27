@@ -41,6 +41,7 @@ export const Profile = () => {
     })
 
     const [msgUploadedFile, setMsgUploadedFile] = useState("")
+    const [msgUpdatedProfile, setMsgUpdatedProfile] = useState("")
 
     const profileInputHandler = (e) => {
         setUser((prevState) => ({
@@ -117,8 +118,11 @@ export const Profile = () => {
                     email: fetched.data.email
                 })
                 setUserPrevToUpdate(user)
-                
+                setMsgUpdatedProfile("Updated profile successfully")
                 setWrite("disabled")
+                setTimeout(() => {
+                    setMsgUpdatedProfile("");
+                }, 2000);
             } else {
                 const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload)
                 const newUserData = {
@@ -138,6 +142,10 @@ export const Profile = () => {
                 localStorage.setItem("passport", JSON.stringify(passportParsed))
                 setWrite("disabled")
                 setMsgUploadedFile("")
+                setMsgUpdatedProfile("Updated profile successfully")
+                setTimeout(() => {
+                    setMsgUpdatedProfile("");
+                }, 2000);
             }
         } catch (error) {
             console.log(error)
@@ -212,6 +220,7 @@ export const Profile = () => {
                         onClickFunction={write === "" ? updateUserData : activateUpdate}
                     />
                 </div>
+                <div className="updatedProfile">{msgUpdatedProfile}</div>
             </div>
         </div>
     )

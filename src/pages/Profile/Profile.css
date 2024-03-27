@@ -28,7 +28,7 @@
     background-color: #fff;
 }
 
-.inputError, .fileRetrievedMsg{
+.inputError, .fileRetrievedMsg, .updatedProfile{
     user-select: none;
     font-weight: bold;
     white-space: pre;
@@ -44,7 +44,7 @@
     color: red;
 }
 
-.fileRetrievedMsg{
+.fileRetrievedMsg, .updatedProfile{
     color: green;
 }
 
