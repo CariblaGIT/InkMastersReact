@@ -1,19 +1,22 @@
 import "./PopUpAppointment.css"
 import { useEffect, useState } from "react"
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import { FormInput } from "../FormInput/FormInput"
 import { FormDropdown } from "../FormDropdown/FormDropdown"
 import { FormButton } from "../FormButton/FormButton"
+import { PostAppointment } from "../../services/appointments/postAppointments"
 
 export const PopUpAppointment = (props) => {
+    const passport = JSON.parse(localStorage.getItem("passport"));
+    const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [actualDate, setActualDate] = useState("");
     const [disablePost, setDisablePost] = useState("disabled");
 
     const [appointment, setAppointment] = useState({
         date: "",
         tattooer: "",
-        service: ""
+        service: "",
+        establishment: ""
     })
 
     useEffect(() => {
@@ -24,7 +27,8 @@ export const PopUpAppointment = (props) => {
     useEffect(() => {
         if(appointment.date !== "" && 
         appointment.tattooer !== "" &&
-        appointment.service !== ""){
+        appointment.service !== "" &&
+        appointment.establishment !== ""){
             setDisablePost("")
         } else {
             setDisablePost("disabled")
@@ -52,9 +56,17 @@ export const PopUpAppointment = (props) => {
         return year + '-' + month + '-' + day;
     }
 
-    const saveNewAppointment = () => {
-        console.log("SAVED")
-        props.onHide()
+    const saveNewAppointment = async () => {
+        try {
+            const fetched = await PostAppointment(tokenStorage, appointment)
+            if(fetched.success === false){
+                throw new Error(fetched.error)
+            }
+            localStorage.setItem("createdAppointment", JSON.stringify(fetched.data));
+            props.onHide()
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 
     return (
@@ -86,6 +98,13 @@ export const PopUpAppointment = (props) => {
                         dataType={"tattooers"}
                         name={"tattooer"}
                         labelText={"tattooers"}
+                        onChange={e => appointmentInputHandler(e)}
+                    />
+                    <FormDropdown
+                        array={props.establishments}
+                        dataType={"establishments"}
+                        name={"establishment"}
+                        labelText={"establishments"}
                         onChange={e => appointmentInputHandler(e)}
                     />
                 </div>

@@ -6,6 +6,7 @@ import { GetAppointments } from "../../services/appointments/getAppointments"
 import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment"
 import { GetServices } from "../../services/services/getServices";
 import { GetTattoers } from "../../services/users/userGetTattoers";
+import { GetEstablishments } from "../../services/establishments/getEstablishments";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -14,10 +15,12 @@ export const UserAppointments = () => {
     const [loadedData, setLoadedData] = useState(false);
     const [loadedServicesData, setLoadedServicesData] = useState(false);
     const [loadedTattoersData, setLoadedTattoersData] = useState(false);
+    const [loadedEstablishmentsData, setLoadedEstablishmentsData] = useState(false);
     const [anyAppointment, setAnyAppointment] = useState(true);
     const [modalShow, setModalShow] = useState(false);
     const [services, setServices] = useState([]);
     const [tattooers, setTattoers] = useState([]);
+    const [establishments, setEstablishments] = useState([]);
 
     const navigate = useNavigate()
 
@@ -61,13 +64,32 @@ export const UserAppointments = () => {
             }
         }
 
+        const getEstablishmentsData = async () => {
+            try {
+                const fetchedServices = await GetEstablishments();
+                setLoadedEstablishmentsData(true);
+                setEstablishments(fetchedServices.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
         if (!loadedData) { getUserAppointments() };
         if (!loadedServicesData) { getServicesData() };
         if (!loadedTattoersData) { getTattooersData() };
+        if (!loadedEstablishmentsData) { getEstablishmentsData() };
     }, [])
 
     const popupAddAppointment = () => {
         setModalShow(true)
+    }
+
+    const closingAddAppointment = () => {
+        setModalShow(false)
+        const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"));
+        if(newAppointment){
+            console.log(newAppointment)
+        }
     }
 
     return (
@@ -104,9 +126,10 @@ export const UserAppointments = () => {
             </div>
             <PopUpAppointment
                 show={modalShow}
-                onHide={() => setModalShow(false)}
+                onHide={closingAddAppointment}
                 services={services}
                 tattooers={tattooers}
+                establishments={establishments}
             />
         </div>
     )
