@@ -1,6 +1,6 @@
 import "./FormInput.css"
 
-export const FormInput = ({labelText, className, type, name, value, placeholder, disabled, onChange, onBlur}) => {
+export const FormInput = ({labelText, className, type, name, value, placeholder, disabled, min, onChange, onBlur}) => {
     return(
         <div className="formInputDesign">
             <label className="formInputLabel">{labelText}</label>
@@ -11,6 +11,7 @@ export const FormInput = ({labelText, className, type, name, value, placeholder,
                 value={value} 
                 placeholder={placeholder}
                 disabled={disabled}
+                min={min}
                 onChange={onChange}
                 onBlur={onBlur}
             />
