@@ -10,6 +10,7 @@ import { GetTattoers } from "../../services/users/userGetTattoers";
 import { GetEstablishments } from "../../services/establishments/getEstablishments";
 import { Table } from "react-bootstrap";
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
+import { DeleteAppointment } from "../../services/appointments/deleteAppointments";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -19,7 +20,6 @@ export const UserAppointments = () => {
     const [loadedServicesData, setLoadedServicesData] = useState(false);
     const [loadedTattoersData, setLoadedTattoersData] = useState(false);
     const [loadedEstablishmentsData, setLoadedEstablishmentsData] = useState(false);
-    const [anyAppointment, setAnyAppointment] = useState(true);
     const [modalShow, setModalShow] = useState(false);
     const [services, setServices] = useState([]);
     const [tattooers, setTattoers] = useState([]);
@@ -35,13 +35,16 @@ export const UserAppointments = () => {
     }, [tokenStorage]);
 
     useEffect(() => {
+        console.log(appointments.length);
+    }, [appointments])
+
+    useEffect(() => {
         const getUserAppointments = async () => {
             try {
                 const fetched = await GetAppointments(tokenStorage);
                 setLoadedData(true);
                 setUserAppointments(fetched.data);
                 if(fetched.data.length > 0){
-                    setAnyAppointment(false)
                     setAppointments(fetched.data)
                 }
             } catch (error) {
@@ -114,11 +117,22 @@ export const UserAppointments = () => {
                 } else {
                     const allAppointments = appointments
                     allAppointments.push(newAppointment)
-                    setAnyAppointment(false)
                     setAppointments(allAppointments)
                     localStorage.removeItem("createdAppointment")
                 }   
             }
+        }
+    }
+
+    const deleteAppointment = async (id, index) => {
+        try {
+            const fetched = await DeleteAppointment(tokenStorage, id)
+            if(fetched.success === false){
+                throw new Error(fetched.error)
+            }
+            setAppointments(appointments.filter((item, i) => i !== index))
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -148,7 +162,7 @@ export const UserAppointments = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {anyAppointment === true ? (
+                                    {appointments.length === 0 ? (
                                         <tr key={"no-values"}>
                                             <td colSpan={6}>No appointments for this user</td>
                                         </tr>
@@ -170,7 +184,7 @@ export const UserAppointments = () => {
                                                         <EntryActionButton
                                                             className={"deleteButton"}
                                                             buttonIcon={"trash"}
-                                                            onClickFunction={() => console.log("Delete")}
+                                                            onClickFunction={() => deleteAppointment(item.id, index)}
                                                         />
                                                     </td>
                                                 </tr>
