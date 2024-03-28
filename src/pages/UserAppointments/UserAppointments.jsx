@@ -90,9 +90,29 @@ export const UserAppointments = () => {
 
     const closingAddAppointment = () => {
         setModalShow(false)
-        const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"));
-        if(newAppointment){
-            console.log(newAppointment)
+        if(localStorage.getItem("createdAppointment")){
+            const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"));
+            const newAppointmentDate = new Date(newAppointment.appointmentDate)
+            if(newAppointment){
+                if(appointments.length > 0){
+                    const allAppointments = appointments
+                    for(let i = 0; i < allAppointments.length; i++){
+                        const dateToCompare = new Date(allAppointments[i].appointmentDate)
+                        if(dateToCompare >= newAppointmentDate){
+                            allAppointments.splice(i, 0, newAppointment)
+                            setAppointments(allAppointments)
+                            localStorage.removeItem("createdAppointment")
+                            break;
+                        }
+                    }
+                } else {
+                    const allAppointments = appointments
+                    allAppointments.push(newAppointment)
+                    setAnyAppointment(false)
+                    setAppointments(allAppointments)
+                    localStorage.removeItem("createdAppointment")
+                }   
+            }
         }
     }
 
@@ -103,37 +123,30 @@ export const UserAppointments = () => {
                 {userAppointments === undefined ? (
                     <>CARGANDO</>
                 ) : (
-                    anyAppointment === true ? (
-                        <>
-                            <div className="buttonsSection">
-                                <button className="newAppointmentBtn" onClick={popupAddAppointment}>
-                                    New <i className="bi bi-calendar-plus calendarIcon"></i>
-                                </button>
-                            </div>
-                            <div className="appointmentsContent">
-                                NO APPOINTMENTS
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className="buttonsSection">
-                                <button className="newAppointmentBtn" onClick={popupAddAppointment}>
-                                    New <i className="bi bi-calendar-plus calendarIcon"></i>
-                                </button>
-                            </div>
-                            <div className="appointmentsContent">
-                                <Table responsive striped variant="dark">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date</th>
-                                            <th>Establishment</th>
-                                            <th>Service</th>
-                                            <th>Tattooer</th>
+                    <>
+                        <div className="buttonsSection">
+                            <button className="newAppointmentBtn" onClick={popupAddAppointment}>
+                                New <i className="bi bi-calendar-plus calendarIcon"></i>
+                            </button>
+                        </div>
+                        <div className="appointmentsContent">
+                        <Table responsive striped variant="dark">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Establishment</th>
+                                        <th>Service</th>
+                                        <th>Tattooer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {anyAppointment === true ? (
+                                        <tr key={"no-values"}>
+                                            <td colSpan={5}>No appointments for this user</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {appointments.map((item, index) => {
+                                    ) : (
+                                        appointments.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td>{index}</td>
@@ -143,12 +156,12 @@ export const UserAppointments = () => {
                                                     <td>{item.tattooer.fullname}</td>
                                                 </tr>
                                             )
-                                        })}
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </>
-                    )
+                                        })
+                                    )}
+                                </tbody>
+                            </Table>
+                        </div>
+                    </>
                 )}
             </div>
             <PopUpAppointment
