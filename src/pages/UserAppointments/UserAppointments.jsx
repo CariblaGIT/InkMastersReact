@@ -11,6 +11,7 @@ import { GetEstablishments } from "../../services/establishments/getEstablishmen
 import { Table } from "react-bootstrap";
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
 import { DeleteAppointment } from "../../services/appointments/deleteAppointments";
+import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -21,10 +22,13 @@ export const UserAppointments = () => {
     const [loadedTattoersData, setLoadedTattoersData] = useState(false);
     const [loadedEstablishmentsData, setLoadedEstablishmentsData] = useState(false);
     const [modalShow, setModalShow] = useState(false);
+    const [verificationModal, setVerificationModal] = useState(false);
     const [services, setServices] = useState([]);
     const [tattooers, setTattoers] = useState([]);
     const [establishments, setEstablishments] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [idAppToDelete, setIdAppToDelete] = useState(0);
+    const [indexAppToDelete, setIndexAppToDelete] = useState(0);
 
     const navigate = useNavigate()
 
@@ -33,10 +37,6 @@ export const UserAppointments = () => {
             navigate("/");
         }
     }, [tokenStorage]);
-
-    useEffect(() => {
-        console.log(appointments.length);
-    }, [appointments])
 
     useEffect(() => {
         const getUserAppointments = async () => {
@@ -89,6 +89,7 @@ export const UserAppointments = () => {
     }, [])
 
     const popupAddAppointment = () => {
+        setVerificationModal(false)
         setModalShow(true)
     }
 
@@ -124,15 +125,33 @@ export const UserAppointments = () => {
         }
     }
 
-    const deleteAppointment = async (id, index) => {
-        try {
-            const fetched = await DeleteAppointment(tokenStorage, id)
-            if(fetched.success === false){
-                throw new Error(fetched.error)
+    const closingVerifyDelete = () => {
+        setIdAppToDelete(0)
+        setIndexAppToDelete(0)
+        setVerificationModal(false)
+    }
+
+    const verifyDeleteAction = (id, index) => {
+        setIdAppToDelete(id)
+        setIndexAppToDelete(index)
+        setModalShow(false)
+        setVerificationModal(true)
+    }
+
+    const deleteAppointment = async () => {
+        if(idAppToDelete !== 0){
+            try {
+                const fetched = await DeleteAppointment(tokenStorage, idAppToDelete)
+                if(fetched.success === false){
+                    throw new Error(fetched.error)
+                }
+                setAppointments(appointments.filter((item, i) => i !== indexAppToDelete))
+                setIdAppToDelete(0)
+                setIndexAppToDelete(0)
+                setVerificationModal(false)
+            } catch (error) {
+                console.log(error)
             }
-            setAppointments(appointments.filter((item, i) => i !== index))
-        } catch (error) {
-            console.log(error)
         }
     }
 
@@ -141,7 +160,7 @@ export const UserAppointments = () => {
             <Header/>
             <div className="userAppointmentsContent">
                 {userAppointments === undefined ? (
-                    <>CARGANDO</>
+                    <>LOADING</>
                 ) : (
                     <>
                         <div className="buttonsSection">
@@ -184,7 +203,7 @@ export const UserAppointments = () => {
                                                         <EntryActionButton
                                                             className={"deleteButton"}
                                                             buttonIcon={"trash"}
-                                                            onClickFunction={() => deleteAppointment(item.id, index)}
+                                                            onClickFunction={() => verifyDeleteAction(item.id, index)}
                                                         />
                                                     </td>
                                                 </tr>
@@ -197,13 +216,23 @@ export const UserAppointments = () => {
                     </>
                 )}
             </div>
-            <PopUpAppointment
-                show={modalShow}
-                onHide={closingAddAppointment}
-                services={services}
-                tattooers={tattooers}
-                establishments={establishments}
-            />
+            {modalShow && (
+                <PopUpAppointment
+                    show={modalShow}
+                    onHide={closingAddAppointment}
+                    services={services}
+                    tattooers={tattooers}
+                    establishments={establishments}
+                />
+            )}
+            {verificationModal && (
+                <PopUpVerifyAction
+                    show={verificationModal}
+                    onHide={closingVerifyDelete}
+                    confirm={deleteAppointment}
+                    entity={"appointment"}
+                />
+            )}
         </div>
     )
 }
