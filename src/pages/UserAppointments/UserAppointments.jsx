@@ -23,12 +23,14 @@ export const UserAppointments = () => {
     const [loadedEstablishmentsData, setLoadedEstablishmentsData] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [verificationModal, setVerificationModal] = useState(false);
+    const [updateModal, setUpdateModal] = useState(false);
     const [services, setServices] = useState([]);
     const [tattooers, setTattoers] = useState([]);
     const [establishments, setEstablishments] = useState([]);
     const [appointments, setAppointments] = useState([]);
-    const [idAppToDelete, setIdAppToDelete] = useState(0);
+    const [idAppInteracted, setIdAppInteracted] = useState(0);
     const [indexAppToDelete, setIndexAppToDelete] = useState(0);
+    const [itemToUpdate, setItemToUpdate] = useState({});
 
     const navigate = useNavigate()
 
@@ -89,7 +91,6 @@ export const UserAppointments = () => {
     }, [])
 
     const popupAddAppointment = () => {
-        setVerificationModal(false)
         setModalShow(true)
     }
 
@@ -126,32 +127,50 @@ export const UserAppointments = () => {
     }
 
     const closingVerifyDelete = () => {
-        setIdAppToDelete(0)
+        setIdAppInteracted(0)
         setIndexAppToDelete(0)
         setVerificationModal(false)
     }
 
     const verifyDeleteAction = (id, index) => {
-        setIdAppToDelete(id)
+        setIdAppInteracted(id)
         setIndexAppToDelete(index)
-        setModalShow(false)
         setVerificationModal(true)
     }
 
     const deleteAppointment = async () => {
-        if(idAppToDelete !== 0){
+        if(idAppInteracted !== 0){
             try {
-                const fetched = await DeleteAppointment(tokenStorage, idAppToDelete)
+                const fetched = await DeleteAppointment(tokenStorage, idAppInteracted)
                 if(fetched.success === false){
                     throw new Error(fetched.error)
                 }
                 setAppointments(appointments.filter((item, i) => i !== indexAppToDelete))
-                setIdAppToDelete(0)
+                setIdAppInteracted(0)
                 setIndexAppToDelete(0)
                 setVerificationModal(false)
             } catch (error) {
                 console.log(error)
             }
+        }
+    }
+
+    const activateUpdateAction = (item, id) => {
+        setItemToUpdate(item)
+        setIdAppInteracted(id)
+        setUpdateModal(true)
+    }
+
+    const closingUpdateAppointment = () => {
+        setUpdateModal(false)
+        if(localStorage.getItem("updatedAppointment")){
+            const appointmentUpdated = JSON.parse(localStorage.getItem("updatedAppointment"))
+            appointments.map((item, index) => {
+                if(item === itemToUpdate){
+                    appointments[index] = appointmentUpdated
+                }
+            })
+            localStorage.removeItem("updatedAppointment")
         }
     }
 
@@ -198,7 +217,7 @@ export const UserAppointments = () => {
                                                         <EntryActionButton
                                                             className={"editButton"}
                                                             buttonIcon={"pencil-square"}
-                                                            onClickFunction={() => console.log("Edit")}
+                                                            onClickFunction={() => activateUpdateAction(item, index)}
                                                         />
                                                         <EntryActionButton
                                                             className={"deleteButton"}
@@ -223,6 +242,7 @@ export const UserAppointments = () => {
                     services={services}
                     tattooers={tattooers}
                     establishments={establishments}
+                    type={"Create"}
                 />
             )}
             {verificationModal && (
@@ -231,6 +251,17 @@ export const UserAppointments = () => {
                     onHide={closingVerifyDelete}
                     confirm={deleteAppointment}
                     entity={"appointment"}
+                />
+            )}
+            {updateModal && (
+                <PopUpAppointment
+                    show={updateModal}
+                    onHide={closingUpdateAppointment}
+                    services={services}
+                    tattooers={tattooers}
+                    establishments={establishments}
+                    item={itemToUpdate}
+                    type={"Update"}
                 />
             )}
         </div>

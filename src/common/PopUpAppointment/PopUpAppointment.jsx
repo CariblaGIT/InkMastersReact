@@ -5,12 +5,13 @@ import { FormInput } from "../FormInput/FormInput"
 import { FormDropdown } from "../FormDropdown/FormDropdown"
 import { FormButton } from "../FormButton/FormButton"
 import { PostAppointment } from "../../services/appointments/postAppointments"
+import { UpdateAppointment } from "../../services/appointments/updateAppointments"
 
 export const PopUpAppointment = (props) => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [actualDate, setActualDate] = useState("");
-    const [disablePost, setDisablePost] = useState("disabled");
+    const [disableAction, setDisableAction] = useState("disabled");
 
     const [appointment, setAppointment] = useState({
         date: "",
@@ -22,6 +23,15 @@ export const PopUpAppointment = (props) => {
     useEffect(() => {
         const actualDate = getDate()
         setActualDate(actualDate)
+        if(props.item){
+            const formatDateApp = formatDate(props.item?.appointmentDate)
+            setAppointment({
+                service : props.item?.service.serviceName,
+                tattooer : props.item?.tattooer.fullname,
+                establishment : props.item?.establishment.address,
+                date : formatDateApp
+            })
+        }
     }, [])
 
     useEffect(() => {
@@ -29,9 +39,9 @@ export const PopUpAppointment = (props) => {
         appointment.tattooer !== "" &&
         appointment.service !== "" &&
         appointment.establishment !== ""){
-            setDisablePost("")
+            setDisableAction("")
         } else {
-            setDisablePost("disabled")
+            setDisableAction("disabled")
         }
     }, [appointment])
 
@@ -44,6 +54,20 @@ export const PopUpAppointment = (props) => {
 
     const getDate = () => {
         const actualDate = new Date()
+        let month = actualDate.getMonth() + 1
+        let day = actualDate.getDate()
+        const year = actualDate.getFullYear()
+        if(month < 10){
+            month = '0' + month.toString();
+        }
+        if(day < 10){
+            day = '0' + day.toString();
+        }
+        return year + '-' + month + '-' + day;
+    }
+
+    const formatDate = (date) => {
+        const actualDate = new Date(date)
         let month = actualDate.getMonth() + 1
         let day = actualDate.getDate()
         const year = actualDate.getFullYear()
@@ -69,11 +93,24 @@ export const PopUpAppointment = (props) => {
         }
     }
 
+    const updateAppointment = async () => {
+        try {
+            const fetched = await UpdateAppointment(tokenStorage, appointment, props.item.id)
+            if(fetched.success === false){
+                throw new Error(fetched.error)
+            }
+            localStorage.setItem("updatedAppointment", JSON.stringify(fetched.data));
+            props.onHide()
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     return (
         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                Create appointment
+                {props.type} appointment
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -84,6 +121,7 @@ export const PopUpAppointment = (props) => {
                         type={"date"}
                         name={"date"}
                         min={actualDate}
+                        value={props.item ? appointment.date : ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -91,6 +129,7 @@ export const PopUpAppointment = (props) => {
                         dataType={"services"}
                         name={"service"}
                         labelText={"services"}
+                        selectedOption={props.item ? appointment.service : ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -98,6 +137,7 @@ export const PopUpAppointment = (props) => {
                         dataType={"tattooers"}
                         name={"tattooer"}
                         labelText={"tattooers"}
+                        selectedOption={props.item ? appointment.tattooer : ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -105,16 +145,17 @@ export const PopUpAppointment = (props) => {
                         dataType={"establishments"}
                         name={"establishment"}
                         labelText={"establishments"}
+                        selectedOption={props.item ? appointment.establishment : ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                 </div>
             </Modal.Body>
             <Modal.Footer>
                 <FormButton
-                    buttonText={"ADD"}
+                    buttonText={props.type === "Create" ? "ADD" : "UPDATE"}
                     className={"formButtonDesignEdit"}
-                    onClickFunction={saveNewAppointment}
-                    disabled={disablePost}
+                    onClickFunction={props.type === "Create" ? saveNewAppointment : updateAppointment}
+                    disabled={props.type === "Create" ? disableAction : ""} 
                 />
             </Modal.Footer>
         </Modal>
