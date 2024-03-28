@@ -9,6 +9,7 @@ import { GetServices } from "../../services/services/getServices";
 import { GetTattoers } from "../../services/users/userGetTattoers";
 import { GetEstablishments } from "../../services/establishments/getEstablishments";
 import { Table } from "react-bootstrap";
+import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -103,6 +104,11 @@ export const UserAppointments = () => {
                             setAppointments(allAppointments)
                             localStorage.removeItem("createdAppointment")
                             break;
+                        } else {
+                            allAppointments.push(newAppointment)
+                            setAppointments(allAppointments)
+                            localStorage.removeItem("createdAppointment")
+                            break;
                         }
                     }
                 } else {
@@ -138,12 +144,13 @@ export const UserAppointments = () => {
                                         <th>Establishment</th>
                                         <th>Service</th>
                                         <th>Tattooer</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {anyAppointment === true ? (
                                         <tr key={"no-values"}>
-                                            <td colSpan={5}>No appointments for this user</td>
+                                            <td colSpan={6}>No appointments for this user</td>
                                         </tr>
                                     ) : (
                                         appointments.map((item, index) => {
@@ -154,6 +161,18 @@ export const UserAppointments = () => {
                                                     <td>{item.establishment.address}</td>
                                                     <td>{item.service.serviceName}</td>
                                                     <td>{item.tattooer.fullname}</td>
+                                                    <td className="buttonSection">
+                                                        <EntryActionButton
+                                                            className={"editButton"}
+                                                            buttonIcon={"pencil-square"}
+                                                            onClickFunction={() => console.log("Edit")}
+                                                        />
+                                                        <EntryActionButton
+                                                            className={"deleteButton"}
+                                                            buttonIcon={"trash"}
+                                                            onClickFunction={() => console.log("Delete")}
+                                                        />
+                                                    </td>
                                                 </tr>
                                             )
                                         })

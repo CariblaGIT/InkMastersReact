@@ -66,3 +66,8 @@
 .calendarIcon{
     margin-left: 1em;
 }
+
+.buttonSection{
+    display: flex;
+    flex-direction: row;
+}

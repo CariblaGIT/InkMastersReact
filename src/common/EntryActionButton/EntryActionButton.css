@@ -1,0 +1,36 @@
+.editButton, .deleteButton{
+    height: 2em;
+    width: 2em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5em;
+}
+
+.deleteButton i, .editButton i{
+    height: 2em;
+    width: 2em;
+}
+
+.editButton{
+    background-color: rgb(29, 142, 255);
+    transition: 0.5s;
+}
+
+.deleteButton{
+    background-color: red;
+    transition: 0.5s;
+}
+
+.editButton:hover{
+    background-color: rgb(68, 157, 247);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.deleteButton:hover{
+    background-color: rgb(255, 52, 52);
+    transition: 0.5s;
+    cursor: pointer;
+}
