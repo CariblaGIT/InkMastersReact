@@ -8,11 +8,6 @@
     margin: 0.5em;
 }
 
-.deleteButton i, .editButton i{
-    height: 2em;
-    width: 2em;
-}
-
 .editButton{
     background-color: rgb(29, 142, 255);
     transition: 0.5s;
