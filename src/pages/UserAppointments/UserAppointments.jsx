@@ -102,19 +102,22 @@ export const UserAppointments = () => {
             if(newAppointment){
                 if(appointments.length > 0){
                     const allAppointments = appointments
+                    let pushed = false
                     for(let i = 0; i < allAppointments.length; i++){
                         const dateToCompare = new Date(allAppointments[i].appointmentDate)
                         if(dateToCompare >= newAppointmentDate){
                             allAppointments.splice(i, 0, newAppointment)
                             setAppointments(allAppointments)
                             localStorage.removeItem("createdAppointment")
-                            break;
-                        } else {
-                            allAppointments.push(newAppointment)
-                            setAppointments(allAppointments)
-                            localStorage.removeItem("createdAppointment")
+                            pushed = true
                             break;
                         }
+                    }
+                    if(!pushed){
+                        allAppointments.push(newAppointment)
+                        setAppointments(allAppointments)
+                        localStorage.removeItem("createdAppointment")
+                        pushed = true
                     }
                 } else {
                     const allAppointments = appointments

@@ -121,7 +121,7 @@ export const PopUpAppointment = (props) => {
                         type={"date"}
                         name={"date"}
                         min={actualDate}
-                        value={props.item ? appointment.date : ""}
+                        value={appointment.date || ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -129,7 +129,7 @@ export const PopUpAppointment = (props) => {
                         dataType={"services"}
                         name={"service"}
                         labelText={"services"}
-                        selectedOption={props.item ? appointment.service : ""}
+                        selectedOption={appointment.service || ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -137,7 +137,7 @@ export const PopUpAppointment = (props) => {
                         dataType={"tattooers"}
                         name={"tattooer"}
                         labelText={"tattooers"}
-                        selectedOption={props.item ? appointment.tattooer : ""}
+                        selectedOption={appointment.tattooer || ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                     <FormDropdown
@@ -145,7 +145,7 @@ export const PopUpAppointment = (props) => {
                         dataType={"establishments"}
                         name={"establishment"}
                         labelText={"establishments"}
-                        selectedOption={props.item ? appointment.establishment : ""}
+                        selectedOption={appointment.establishment || ""}
                         onChange={e => appointmentInputHandler(e)}
                     />
                 </div>
