@@ -1,0 +1,55 @@
+.formDropdownDesign{
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-style: none;
+    outline: none;
+    height: fit-content;
+    width: 16em;
+    padding: 0.8em 1em;
+    border: 0.25em solid transparent;
+    background-image: linear-gradient(#000, #000), linear-gradient(120deg, #fff 0%, #585757 50%, #404040 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 1.8em;
+    background-size: 200% 100%;
+    transition: background-position 0.8s ease-out;
+    margin: 0.5em;
+}
+
+.formDropdownLabel{
+    width: fit-content;
+    user-select: none;
+    padding: 0 0.75em 0 0.75em;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    letter-spacing: 0.1em;
+    color: #fff;
+    border: 0.25em solid transparent;
+    border-radius: 1.8em;
+    background-image: linear-gradient(#000, #000), linear-gradient(120deg, #fff 0%, #585757 50%, #404040 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 200% 100%;
+    z-index: 3;
+}
+
+.tattooers{
+    margin: 0 0 -2em -16em;
+}
+
+.services{
+    margin: 0 0 -2em -17em;
+}
+
+.establishments{
+    margin: 0 0 -2em -13em;
+}
+
+.formDropdownDesign:hover{
+    background-position: 100% 0;
+}
+
+.optionDropdown{
+    background-color: #000;
+}
