@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import { Header } from "../../common/Header/Header"
 import { useNavigate } from "react-router-dom"
 import "./UserAppointments.css"
@@ -7,6 +8,7 @@ import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment
 import { GetServices } from "../../services/services/getServices";
 import { GetTattoers } from "../../services/users/userGetTattoers";
 import { GetEstablishments } from "../../services/establishments/getEstablishments";
+import { Table } from "react-bootstrap";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -21,6 +23,7 @@ export const UserAppointments = () => {
     const [services, setServices] = useState([]);
     const [tattooers, setTattoers] = useState([]);
     const [establishments, setEstablishments] = useState([]);
+    const [appointments, setAppointments] = useState([]);
 
     const navigate = useNavigate()
 
@@ -38,6 +41,7 @@ export const UserAppointments = () => {
                 setUserAppointments(fetched.data);
                 if(fetched.data.length > 0){
                     setAnyAppointment(false)
+                    setAppointments(fetched.data)
                 }
             } catch (error) {
                 console.log(error);
@@ -118,7 +122,30 @@ export const UserAppointments = () => {
                                 </button>
                             </div>
                             <div className="appointmentsContent">
-                                APPOINTMENTS
+                                <Table responsive striped variant="dark">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Date</th>
+                                            <th>Establishment</th>
+                                            <th>Service</th>
+                                            <th>Tattooer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {appointments.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{index}</td>
+                                                    <td>{dayjs(item.appointmentDate).format("DD/MM/YYYY")}</td>
+                                                    <td>{item.establishment.address}</td>
+                                                    <td>{item.service.serviceName}</td>
+                                                    <td>{item.tattooer.fullname}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </Table>
                             </div>
                         </>
                     )
