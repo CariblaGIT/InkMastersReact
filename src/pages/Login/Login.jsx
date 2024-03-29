@@ -51,9 +51,6 @@ export const Login = () => {
             };
 
             localStorage.setItem("passport", JSON.stringify(passport));
-
-            console.log(passport.decoded.roleName)
-            console.log(adminRegexp.test(passport.decoded.roleName))
             
             if(adminRegexp.test(passport.decoded.roleName)){
                 setMsgSuccess(fetched.message + "\n" + "Redirecting to admin panel")

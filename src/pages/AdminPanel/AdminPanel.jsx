@@ -19,7 +19,26 @@ export const AdminPanel = () => {
         <>
             <Header/>
             <div className="adminPanelDesign">
-                Soy el admin panel
+                <div className="row">
+                    <button className="userSection">
+                        USERS
+                        <i className="bi bi-people-fill icon"></i>
+                    </button>
+                    <button className="roleSection">
+                        ROLES
+                        <i className="bi bi-tags-fill icon"></i>
+                    </button>
+                </div>
+                <div className="row">
+                    <button className="serviceSection">
+                        SERVICES
+                        <i className="bi bi-collection-fill icon"></i>
+                    </button>
+                    <button className="establishmentSection">
+                        ESTABLISHMENTS
+                        <i className="bi bi-shop icon"></i>
+                    </button>
+                </div>
             </div>
         </>
     )

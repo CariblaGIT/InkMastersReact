@@ -9,3 +9,118 @@
     justify-content: center;
     align-items: center;
 }
+
+.row{
+    height: 40vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.formButtonDesign {
+    color: #fff;
+    font-weight: bold;
+    user-select: none;
+    border-style: none;
+    outline: none;
+    height: fit-content;
+    padding: 0.8em 1em;
+    margin: 1em;
+    border: 0.25em solid transparent;
+    background-image: linear-gradient(#000, #000), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 0.5em;
+    background-size: 200% 100%;
+    transition: 1s;
+    animation: glowing-button 20s linear infinite;
+    pointer-events: all;
+}
+
+.userSection, .roleSection, .serviceSection, .establishmentSection{
+    height: 30vh;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #fff;
+    font-weight: bold;
+    user-select: none;
+    border-style: none;
+    outline: none;
+    padding: 0.8em 1em;
+    margin: 1em;
+    border: 0.25em solid transparent;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 0.5em;
+    background-size: 200% 100%;
+    transition: 1s;
+    animation: glowing-button 20s linear infinite;
+    pointer-events: all;
+}
+
+.userSection{
+    background-image: linear-gradient(#2778fb, #2778fb), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
+}
+
+.roleSection{
+    background-image: linear-gradient(#f04343, #f04343), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
+}
+
+.serviceSection{
+    background-image: linear-gradient(rgb(22, 202, 142), rgb(22, 202, 142)), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
+}
+
+.establishmentSection{
+    background-image: linear-gradient(rgb(130, 255, 47), rgb(130, 255, 47)), linear-gradient(40deg, #fff, #bfbfbf, #9d9b9b, #585757, #404040, #2c2c2c, #000000);
+}
+
+.userSection:hover{
+    background-image: linear-gradient(rgb(34, 105, 219), rgb(34, 105, 219)), linear-gradient(40deg, #000000, #2c2c2c, #404040, #585757, #9d9b9b, #bfbfbf, #fff);
+    color: #000;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.roleSection:hover{
+    background-image: linear-gradient(rgb(196, 48, 48), rgb(196, 48, 48)), linear-gradient(40deg, #000000, #2c2c2c, #404040, #585757, #9d9b9b, #bfbfbf, #fff);
+    color: #000;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.serviceSection:hover{
+    background-image: linear-gradient(rgb(13, 173, 120), rgb(13, 173, 120)), linear-gradient(40deg, #000000, #2c2c2c, #404040, #585757, #9d9b9b, #bfbfbf, #fff);
+    color: #000;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.establishmentSection:hover{
+    background-image: linear-gradient(rgb(103, 212, 31), rgb(103, 212, 31)), linear-gradient(40deg, #000000, #2c2c2c, #404040, #585757, #9d9b9b, #bfbfbf, #fff);
+    color: #000;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.icon{
+    font-size: 4em;
+}
+
+@keyframes glowing-button {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
