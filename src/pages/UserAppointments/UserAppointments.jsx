@@ -185,7 +185,7 @@ export const UserAppointments = () => {
                     <>LOADING</>
                 ) : (
                     <>
-                        <div className="buttonsSection">
+                        <div className="buttonsSectionApp">
                             <button className="newAppointmentBtn" onClick={popupAddAppointment}>
                                 New <i className="bi bi-calendar-plus calendarIcon"></i>
                             </button>
