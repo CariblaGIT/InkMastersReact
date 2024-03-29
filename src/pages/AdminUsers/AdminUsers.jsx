@@ -18,9 +18,11 @@ export const AdminUsers = () => {
     const [loadedData, setLoadedData] = useState(false);
     const [loadedRolesData, setLoadedRolesData] = useState(false);
     const [modalCreateUserShow, setModalCreateUserShow] = useState(false);
+    const [modalUpdateUserShow, setModalUpdateUserShow] = useState(false);
     const [verificationModal, setVerificationModal] = useState(false);
     const [idAppInteracted, setIdAppInteracted] = useState(0);
     const [indexAppToDelete, setIndexAppToDelete] = useState(0);
+    const [itemToUpdate, setItemToUpdate] = useState({});
     const adminRegexp = /\b(?:admin|super_admin)\b/
     const navigate = useNavigate()
 
@@ -102,6 +104,15 @@ export const AdminUsers = () => {
         }
     }
 
+    const popupEditUser = (item) => {
+        setItemToUpdate(item)
+        setModalUpdateUserShow(true)
+    }
+
+    const closingUpdateUser = () => {
+        setModalUpdateUserShow(false)
+    }
+
     return (
         <div className="adminUsersDesign">
             <Header/>
@@ -143,7 +154,7 @@ export const AdminUsers = () => {
                                                         <EntryActionButton
                                                             className={"editButton"}
                                                             buttonIcon={"pencil-square"}
-                                                            onClickFunction={() => console.log("Edit")}
+                                                            onClickFunction={() => popupEditUser(item)}
                                                         />
                                                         <EntryActionButton
                                                             className={"deleteButton"}
@@ -175,6 +186,15 @@ export const AdminUsers = () => {
                     onHide={closingVerifyDelete}
                     confirm={deleteUser}
                     entity={"user"}
+                />
+            )}
+            {modalUpdateUserShow && (
+                <PopUpUser
+                    show={modalUpdateUserShow}
+                    roles={roles}
+                    onHide={closingUpdateUser}
+                    item={itemToUpdate}
+                    type={"Update"}
                 />
             )}
         </div>

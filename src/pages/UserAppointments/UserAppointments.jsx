@@ -158,9 +158,8 @@ export const UserAppointments = () => {
         }
     }
 
-    const activateUpdateAction = (item, id) => {
+    const activateUpdateAction = (item) => {
         setItemToUpdate(item)
-        setIdAppInteracted(id)
         setUpdateModal(true)
     }
 
@@ -220,7 +219,7 @@ export const UserAppointments = () => {
                                                         <EntryActionButton
                                                             className={"editButton"}
                                                             buttonIcon={"pencil-square"}
-                                                            onClickFunction={() => activateUpdateAction(item, index)}
+                                                            onClickFunction={() => activateUpdateAction(item)}
                                                         />
                                                         <EntryActionButton
                                                             className={"deleteButton"}

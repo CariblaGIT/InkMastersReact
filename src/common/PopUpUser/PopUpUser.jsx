@@ -26,7 +26,7 @@ export const PopUpUser = (props) => {
                 username : props.item?.username,
                 role : props.item?.role,
                 email : props.item?.email,
-                password : props.item?.password
+                password : ""
             })
         }
     }, [])
