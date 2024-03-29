@@ -15,12 +15,16 @@ export const AdminPanel = () => {
         }
     }, [tokenStorage])
 
+    const handleUsersPanelButton = () => {
+        navigate("/admin-panel/users")
+    }
+
     return (
         <>
             <Header/>
             <div className="adminPanelDesign">
                 <div className="row">
-                    <button className="userSection">
+                    <button className="userSection" onClick={handleUsersPanelButton}>
                         USERS
                         <i className="bi bi-people-fill icon"></i>
                     </button>
