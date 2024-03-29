@@ -5,12 +5,14 @@ import { Header } from "../../common/Header/Header"
 import { GetUsers } from "../../services/users/userGetUsers"
 import { Table } from "react-bootstrap"
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
+import { PopUpUser } from "../../common/PopUpUser/PopUpUser"
 
 export const AdminUsers = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [users, setUsers] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
+    const [modalCreateUserShow, setModalCreateUserShow] = useState(false);
     const adminRegexp = /\b(?:admin|super_admin)\b/
     const navigate = useNavigate()
 
@@ -37,6 +39,14 @@ export const AdminUsers = () => {
         navigate("/admin-panel")
     }
 
+    const popupAddUser = () => {
+        setModalCreateUserShow(true)
+    }
+
+    const closingAddUser = () => {
+        setModalCreateUserShow(false)
+    }
+
     return (
         <div className="adminUsersDesign">
             <Header/>
@@ -49,7 +59,7 @@ export const AdminUsers = () => {
                             <button className="backAdminPanel" onClick={backToAdmin}>
                                 Back <i className="bi bi-arrow-counterclockwise arrowBackIcon"></i>
                             </button>
-                            <button className="newUserBtn" onClick={() => console.log("New")}>
+                            <button className="newUserBtn" onClick={popupAddUser}>
                                 New <i className="bi bi-person-fill-add userIcon"></i>
                             </button>
                         </div>
@@ -96,6 +106,13 @@ export const AdminUsers = () => {
                     </>
                 )}
             </div>
+            {modalCreateUserShow && (
+                <PopUpUser
+                    show={modalCreateUserShow}
+                    onHide={closingAddUser}
+                    type={"Create"}
+                />
+            )}
         </div>
     )
 }
