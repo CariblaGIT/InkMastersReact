@@ -63,6 +63,19 @@ export const PopUpUser = (props) => {
         }
     }
 
+    const updateUser = async () => {
+        try {
+            const fetched = await UpdateUser(tokenStorage, user, props.item.id)
+            if(fetched.success === false){
+                throw new Error(fetched.error)
+            }
+            localStorage.setItem("updatedUser", JSON.stringify(fetched.data));
+            props.onHide()
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     return (
         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
@@ -122,7 +135,7 @@ export const PopUpUser = (props) => {
                 <FormButton
                     buttonText={props.type === "Create" ? "ADD" : "UPDATE"}
                     className={"formButtonDesignEdit"}
-                    onClickFunction={props.type === "Create" ? saveNewUser : () => console.log("Update")}
+                    onClickFunction={props.type === "Create" ? saveNewUser : updateUser}
                     disabled={props.type === "Create" ? disableAction : ""} 
                 />
             </Modal.Footer>
