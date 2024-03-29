@@ -6,12 +6,15 @@ import { GetUsers } from "../../services/users/userGetUsers"
 import { Table } from "react-bootstrap"
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
 import { PopUpUser } from "../../common/PopUpUser/PopUpUser"
+import { GetRoles } from "../../services/roles/roleGetRoles"
 
 export const AdminUsers = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [users, setUsers] = useState(undefined);
+    const [roles, setRoles] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
+    const [loadedRolesData, setLoadedRolesData] = useState(false);
     const [modalCreateUserShow, setModalCreateUserShow] = useState(false);
     const adminRegexp = /\b(?:admin|super_admin)\b/
     const navigate = useNavigate()
@@ -32,7 +35,18 @@ export const AdminUsers = () => {
                 console.log(error);
             }
         }
+
+        const getRoles = async () => {
+            try {
+                const fetched = await GetRoles(tokenStorage);
+                setLoadedRolesData(true);
+                setRoles(fetched.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
         if (!loadedData) { getUsers() };
+        if (!loadedRolesData) { getRoles() };
     }, [])
 
     const backToAdmin = () => {
@@ -45,6 +59,13 @@ export const AdminUsers = () => {
 
     const closingAddUser = () => {
         setModalCreateUserShow(false)
+        if(localStorage.getItem("createdUser")){
+            const newUser = JSON.parse(localStorage.getItem("createdUser"));
+            const allUsers = users
+            allUsers.push(newUser)
+            setUsers(allUsers)
+            localStorage.removeItem("createdUser")
+        }
     }
 
     return (
@@ -70,8 +91,8 @@ export const AdminUsers = () => {
                                         <th>#</th>
                                         <th>Fullname</th>
                                         <th>Username</th>
-                                        <th>Avatar</th>
                                         <th>Email</th>
+                                        <th>Role</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -82,8 +103,8 @@ export const AdminUsers = () => {
                                                     <td>{index}</td>
                                                     <td>{item.fullname}</td>
                                                     <td>{item.username}</td>
-                                                    <td>{item.avatar}</td>
                                                     <td>{item.email}</td>
+                                                    <td>{item.role.name}</td>
                                                     <td className="buttonSection">
                                                         <EntryActionButton
                                                             className={"editButton"}
@@ -109,6 +130,7 @@ export const AdminUsers = () => {
             {modalCreateUserShow && (
                 <PopUpUser
                     show={modalCreateUserShow}
+                    roles={roles}
                     onHide={closingAddUser}
                     type={"Create"}
                 />
