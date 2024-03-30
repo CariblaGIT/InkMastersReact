@@ -73,9 +73,9 @@ This project is developed based on a previous [project](https://github.com/Carib
 
 <h4 align="center">Login & Register</h4>
 
-<div align="center">
-<img width="50%" src="./public/readme/register.png"><img width="50%" src="./public/readme/login.png">
-</div>
+<img src="./public/readme/register.png">
+
+<img src="./public/readme/login.png">
 
 <h4 align="center">Appointments</h4>
 
