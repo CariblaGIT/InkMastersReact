@@ -19,6 +19,10 @@ export const AdminPanel = () => {
         navigate("/admin-panel/users")
     }
 
+    const handleEstablishmentsPanelButton = () => {
+        navigate("/admin-panel/establishments")
+    }
+
     return (
         <>
             <Header/>
@@ -38,7 +42,7 @@ export const AdminPanel = () => {
                         SERVICES
                         <i className="bi bi-collection-fill icon"></i>
                     </button>
-                    <button className="establishmentSection">
+                    <button className="establishmentSection" onClick={handleEstablishmentsPanelButton}>
                         ESTABLISHMENTS
                         <i className="bi bi-shop icon"></i>
                     </button>
