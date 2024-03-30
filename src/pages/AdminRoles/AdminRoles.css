@@ -1,4 +1,4 @@
-.userAppointmentsDesign{
+.adminRolesDesign{
     height: 100vh;
     width: 100vw;
 
@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.userAppointmentsContent{
+.adminRolesContent{
     height: 88vh;
     width: 100vw;
 
@@ -20,21 +20,24 @@
     align-items: center;
 }
 
-.buttonsSectionApp{
+.buttonsSection{
     height: 10vh;
     width: 100vw;
 
     margin-right: 5em;
+    margin-left: 5em;
+
+    padding-right: 5em;
+    padding-left: 5em;
 
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 
-.newAppointmentBtn{
+.newRoleBtn, .backAdminPanel{
     color: #fff;
-    background-color: green;
     transition: 0.5s;
 
     height: 2em;
@@ -45,13 +48,27 @@
     justify-content: center;
 }
 
-.newAppointmentBtn:hover{
+.newRoleBtn{
+    background-color: green;
+}
+
+.backAdminPanel{
+    background-color: rgb(68, 68, 68);
+}
+
+.newRoleBtn:hover{
     background-color: greenyellow;
     transition: 0.5s;
     cursor: pointer;
 }
 
-.appointmentsContent{
+.backAdminPanel:hover{
+    background-color: dimgray;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.rolesContent{
     height: 78vh;
     width: 100vw;
 
@@ -63,7 +80,7 @@
     align-items: center;
 }
 
-.calendarIcon{
+.arrowBackIcon, .roleIcon{
     margin-left: 1em;
 }
 

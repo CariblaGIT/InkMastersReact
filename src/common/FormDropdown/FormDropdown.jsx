@@ -19,6 +19,10 @@ export const FormDropdown = ({array, dataType, name, labelText, selectedOption, 
                 setId("id")
                 setValue("address")
                 break;
+            case "roles":
+                setId("id")
+                setValue("name")
+                break;
         }
     }, [])
 
