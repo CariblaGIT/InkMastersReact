@@ -12,6 +12,7 @@ import { Table } from "react-bootstrap";
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
 import { DeleteAppointment } from "../../services/appointments/deleteAppointments";
 import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction";
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -181,7 +182,7 @@ export const UserAppointments = () => {
             <Header/>
             <div className="userAppointmentsContent">
                 {userAppointments === undefined ? (
-                    <>LOADING</>
+                    <LoadingIcon/>
                 ) : (
                     <>
                         <div className="buttonsSectionApp">

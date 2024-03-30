@@ -9,6 +9,7 @@ import { PopUpUser } from "../../common/PopUpUser/PopUpUser"
 import { GetRoles } from "../../services/roles/roleGetRoles"
 import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction"
 import { DeleteUser } from "../../services/users/userDeleteUser"
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon"
 
 export const AdminUsers = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -118,7 +119,7 @@ export const AdminUsers = () => {
             <Header/>
             <div className="adminUsersContent">
                 {users === undefined ? (
-                    <>LOADING</>
+                    <LoadingIcon/>
                 ) : (
                     <>
                         <div className="buttonsSection">

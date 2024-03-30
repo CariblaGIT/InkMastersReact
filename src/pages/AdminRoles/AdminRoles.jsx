@@ -5,6 +5,7 @@ import { Header } from "../../common/Header/Header"
 import { Table } from "react-bootstrap"
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
 import { GetRoles } from "../../services/roles/roleGetRoles"
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon"
 
 export const AdminRoles = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -42,7 +43,7 @@ export const AdminRoles = () => {
             <Header/>
             <div className="adminRolesContent">
                 {roles === undefined ? (
-                    <>LOADING</>
+                    <LoadingIcon/>
                 ) : (
                     <>
                         <div className="buttonsSection">
