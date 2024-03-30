@@ -1,15 +1,15 @@
-import "./AdminEstablishments.css"
+import "./AdminServices.css"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { Header } from "../../common/Header/Header"
 import { Table } from "react-bootstrap"
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
-import { GetEstablishments } from "../../services/establishments/getEstablishments"
+import { GetServices } from "../../services/services/getServices"
 
-export const AdminEstablishments = () => {
+export const AdminServices = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [establishments, setEstablishments] = useState(undefined);
+    const [services, setServices] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
     const adminRegexp = /\b(?:admin|super_admin)\b/;
     const navigate = useNavigate();
@@ -25,23 +25,23 @@ export const AdminEstablishments = () => {
     }
 
     useEffect(() => {
-        const getEstablishmentss = async () => {
+        const getServices = async () => {
             try {
-                const fetched = await GetEstablishments(tokenStorage);
+                const fetched = await GetServices();
                 setLoadedData(true);
-                setEstablishments(fetched.data);
+                setServices(fetched.data);
             } catch (error) {
                 console.log(error);
             }
         }
-        if (!loadedData) { getEstablishmentss() };
+        if (!loadedData) { getServices() };
     })
 
     return (
-        <div className="adminEstablishmentsDesign">
+        <div className="adminServicesDesign">
             <Header/>
-            <div className="adminEstablishmentsContent">
-                {establishments === undefined ? (
+            <div className="adminServicesContent">
+                {services === undefined ? (
                     <>LOADING</>
                 ) : (
                     <>
@@ -49,29 +49,27 @@ export const AdminEstablishments = () => {
                             <button className="backAdminPanel" onClick={backToAdmin}>
                                 Back <i className="bi bi-arrow-counterclockwise arrowBackIcon"></i>
                             </button>
-                            <button className="newEstablishmentBtn" onClick={() => console.log("ADD")}>
-                                New <i className="bi bi-shop establishmentIcon"></i>
+                            <button className="newServiceBtn" onClick={() => console.log("ADD")}>
+                                New <i className="bi bi-collection-fill serviceIcon"></i>
                             </button>
                         </div>
-                        <div className="establishmentsContent">
+                        <div className="servicesContent">
                         <Table responsive striped variant="dark">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Postal Code</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {establishments.map((item, index) => {
+                                    {services.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td>{index}</td>
-                                                    <td>{item.address}</td>
-                                                    <td>{item.city}</td>
-                                                    <td>{item.postalCode}</td>
+                                                    <td>{item.serviceName}</td>
+                                                    <td>{item.description}</td>
                                                     <td className="buttonSection">
                                                         <EntryActionButton
                                                             className={"editButton"}

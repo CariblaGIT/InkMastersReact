@@ -7,6 +7,7 @@ import { UserAppointments } from "../UserAppointments/UserAppointments"
 import { AdminPanel } from "../AdminPanel/AdminPanel"
 import { AdminUsers } from "../AdminUsers/AdminUsers"
 import { AdminEstablishments } from "../AdminEstablishments/AdminEstablishments"
+import { AdminServices } from "../AdminServices/AdminServices"
 
 export const Body = () => {
     return (
@@ -20,6 +21,7 @@ export const Body = () => {
             <Route path="/admin-panel" element={<AdminPanel/>}/>
             <Route path="/admin-panel/users" element={<AdminUsers/>}/>
             <Route path="/admin-panel/establishments" element={<AdminEstablishments/>}/>
+            <Route path="/admin-panel/services" element={<AdminServices/>}/>
         </Routes>
     )
 }
