@@ -8,6 +8,7 @@ import { HeaderLinks } from "../HeaderLinks/HeaderLinks"
 
 export const Header = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
+    const adminRegexp = /\b(?:admin|super_admin)\b/
 
     const navigate = useNavigate()
 
@@ -21,6 +22,10 @@ export const Header = () => {
 
     const handleAppointmentsClick = () => {
         navigate("/appointments");
+    }
+
+    const handleAdminClick = () => {
+        navigate("/admin-panel");
     }
 
     const handleLogoutClick = () => {
@@ -42,6 +47,11 @@ export const Header = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu className="menuDropdown">
+                                {adminRegexp.test(passport.decoded.roleName) ? (
+                                    <Dropdown.Item onClick={handleAdminClick}>Admin Panel</Dropdown.Item>
+                                ) : (
+                                    <></>
+                                )}
                                 <Dropdown.Item onClick={handleAppointmentsClick}>Appointments</Dropdown.Item>
                                 <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
                                 <Dropdown.Item onClick={handleLogoutClick}>Logout</Dropdown.Item>

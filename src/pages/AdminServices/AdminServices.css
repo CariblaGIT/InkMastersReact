@@ -1,4 +1,4 @@
-.userAppointmentsDesign{
+.adminServicesDesign{
     height: 100vh;
     width: 100vw;
 
@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.userAppointmentsContent{
+.adminServicesContent{
     height: 88vh;
     width: 100vw;
 
@@ -20,21 +20,24 @@
     align-items: center;
 }
 
-.buttonsSectionApp{
+.buttonsSection{
     height: 10vh;
     width: 100vw;
 
     margin-right: 5em;
+    margin-left: 5em;
+
+    padding-right: 5em;
+    padding-left: 5em;
 
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 
-.newAppointmentBtn{
+.newServiceBtn, .backAdminPanel{
     color: #fff;
-    background-color: green;
     transition: 0.5s;
 
     height: 2em;
@@ -45,13 +48,27 @@
     justify-content: center;
 }
 
-.newAppointmentBtn:hover{
+.newServiceBtn{
+    background-color: green;
+}
+
+.backAdminPanel{
+    background-color: rgb(68, 68, 68);
+}
+
+.newServiceBtn:hover{
     background-color: greenyellow;
     transition: 0.5s;
     cursor: pointer;
 }
 
-.appointmentsContent{
+.backAdminPanel:hover{
+    background-color: dimgray;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.servicesContent{
     height: 78vh;
     width: 100vw;
 
@@ -63,7 +80,7 @@
     align-items: center;
 }
 
-.calendarIcon{
+.arrowBackIcon, .serviceIcon{
     margin-left: 1em;
 }
 

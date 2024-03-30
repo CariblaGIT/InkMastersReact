@@ -6,6 +6,7 @@ import { FormDropdown } from "../FormDropdown/FormDropdown"
 import { FormButton } from "../FormButton/FormButton"
 import { PostAppointment } from "../../services/appointments/postAppointments"
 import { UpdateAppointment } from "../../services/appointments/updateAppointments"
+import { FormatDate } from "../../utils/formatDate"
 
 export const PopUpAppointment = (props) => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -24,7 +25,7 @@ export const PopUpAppointment = (props) => {
         const actualDate = getDate()
         setActualDate(actualDate)
         if(props.item){
-            const formatDateApp = formatDate(props.item?.appointmentDate)
+            const formatDateApp = FormatDate(props.item?.appointmentDate)
             setAppointment({
                 service : props.item?.service.serviceName,
                 tattooer : props.item?.tattooer.fullname,
@@ -54,20 +55,6 @@ export const PopUpAppointment = (props) => {
 
     const getDate = () => {
         const actualDate = new Date()
-        let month = actualDate.getMonth() + 1
-        let day = actualDate.getDate()
-        const year = actualDate.getFullYear()
-        if(month < 10){
-            month = '0' + month.toString();
-        }
-        if(day < 10){
-            day = '0' + day.toString();
-        }
-        return year + '-' + month + '-' + day;
-    }
-
-    const formatDate = (date) => {
-        const actualDate = new Date(date)
         let month = actualDate.getMonth() + 1
         let day = actualDate.getDate()
         const year = actualDate.getFullYear()
@@ -118,7 +105,7 @@ export const PopUpAppointment = (props) => {
                     <FormInput
                         labelText={"Date"}
                         className={"formInputField"}
-                        type={"date"}
+                        type={"datetime-local"}
                         name={"date"}
                         min={actualDate}
                         value={appointment.date || ""}

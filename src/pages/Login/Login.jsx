@@ -9,6 +9,7 @@ import { decodeToken } from "react-jwt"
 
 export const Login = () => {
     const navigate = useNavigate();
+    const adminRegexp = /\b(?:admin|super_admin)\b/
 
     const [credentials, setCredentials] = useState({
         email: "",
@@ -41,7 +42,6 @@ export const Login = () => {
                 throw new Error("Invalid credentials")
             }
             setSuccess(true)
-            setMsgSuccess(fetched.message + "\n" + "Redirecting to your profile")
 
             const decodedToken = decodeToken(fetched.token)
 
@@ -52,9 +52,17 @@ export const Login = () => {
 
             localStorage.setItem("passport", JSON.stringify(passport));
             
-            setTimeout(() => {
-                navigate("/appointments");
-              }, 2000);
+            if(adminRegexp.test(passport.decoded.roleName)){
+                setMsgSuccess(fetched.message + "\n" + "Redirecting to admin panel")
+                setTimeout(() => {
+                    navigate("/admin-panel");
+                }, 2000);
+            } else {
+                setMsgSuccess(fetched.message + "\n" + "Redirecting to your appointments")
+                setTimeout(() => {
+                    navigate("/appointments");
+                }, 2000);
+            }
         } catch (error) {
             setSuccess(false)
             setMsgSuccess(error.message)
