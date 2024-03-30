@@ -27,6 +27,10 @@ export const AdminPanel = () => {
         navigate("/admin-panel/services")
     }
 
+    const handleRolesPanelButton = () => {
+        navigate("/admin-panel/roles")
+    }
+
     return (
         <>
             <Header/>
@@ -36,7 +40,7 @@ export const AdminPanel = () => {
                         USERS
                         <i className="bi bi-people-fill icon"></i>
                     </button>
-                    <button className="roleSection">
+                    <button className="roleSection" onClick={handleRolesPanelButton}>
                         ROLES
                         <i className="bi bi-tags-fill icon"></i>
                     </button>

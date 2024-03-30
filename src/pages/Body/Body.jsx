@@ -8,6 +8,7 @@ import { AdminPanel } from "../AdminPanel/AdminPanel"
 import { AdminUsers } from "../AdminUsers/AdminUsers"
 import { AdminEstablishments } from "../AdminEstablishments/AdminEstablishments"
 import { AdminServices } from "../AdminServices/AdminServices"
+import { AdminRoles } from "../AdminRoles/AdminRoles"
 
 export const Body = () => {
     return (
@@ -22,6 +23,7 @@ export const Body = () => {
             <Route path="/admin-panel/users" element={<AdminUsers/>}/>
             <Route path="/admin-panel/establishments" element={<AdminEstablishments/>}/>
             <Route path="/admin-panel/services" element={<AdminServices/>}/>
+            <Route path="/admin-panel/roles" element={<AdminRoles/>}/>
         </Routes>
     )
 }
