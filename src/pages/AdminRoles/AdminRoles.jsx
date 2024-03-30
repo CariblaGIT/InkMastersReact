@@ -50,7 +50,7 @@ export const AdminRoles = () => {
                                 Back <i className="bi bi-arrow-counterclockwise arrowBackIcon"></i>
                             </button>
                             <button className="newRoleBtn" onClick={() => console.log("ADD")}>
-                                New <i className="bi bi-shop roleIcon"></i>
+                                New <i className="bi bi-tags-fill roleIcon"></i>
                             </button>
                         </div>
                         <div className="rolesContent">
