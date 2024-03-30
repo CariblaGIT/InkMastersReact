@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { Header } from "../../common/Header/Header"
 import { useNavigate } from "react-router-dom"
 import "./UserAppointments.css"
@@ -13,6 +12,7 @@ import { EntryActionButton } from "../../common/EntryActionButton/EntryActionBut
 import { DeleteAppointment } from "../../services/appointments/deleteAppointments";
 import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction";
 import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
+import { FormatDate } from "../../utils/formatDate";
 
 export const UserAppointments = () => {
     const passport = JSON.parse(localStorage.getItem("passport"));
@@ -99,13 +99,15 @@ export const UserAppointments = () => {
         setModalShow(false)
         if(localStorage.getItem("createdAppointment")){
             const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"));
-            const newAppointmentDate = new Date(newAppointment.appointmentDate)
+            let newAppointmentDate = newAppointment.appointmentDate
+            newAppointmentDate += "Z";
+            newAppointment.appointmentDate = newAppointmentDate
             if(newAppointment){
                 if(appointments.length > 0){
                     const allAppointments = appointments
                     let pushed = false
                     for(let i = 0; i < allAppointments.length; i++){
-                        const dateToCompare = new Date(allAppointments[i].appointmentDate)
+                        const dateToCompare = allAppointments[i].appointmentDate
                         if(dateToCompare >= newAppointmentDate){
                             allAppointments.splice(i, 0, newAppointment)
                             setAppointments(allAppointments)
@@ -212,7 +214,7 @@ export const UserAppointments = () => {
                                             return (
                                                 <tr key={index}>
                                                     <td>{index}</td>
-                                                    <td>{dayjs(item.appointmentDate).format("DD/MM/YYYY")}</td>
+                                                    <td>{FormatDate(item.appointmentDate)}</td>
                                                     <td>{item.establishment.address}</td>
                                                     <td>{item.service.serviceName}</td>
                                                     <td>{item.tattooer.fullname}</td>
