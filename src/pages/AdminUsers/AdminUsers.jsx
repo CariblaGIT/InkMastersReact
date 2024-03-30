@@ -24,11 +24,10 @@ export const AdminUsers = () => {
     const [idAppInteracted, setIdAppInteracted] = useState(0);
     const [indexAppToDelete, setIndexAppToDelete] = useState(0);
     const [itemToUpdate, setItemToUpdate] = useState({});
-    const adminRegexp = /\b(?:admin|super_admin)\b/
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!tokenStorage || !adminRegexp.test(passport.decoded.roleName)) {
+        if (!tokenStorage || !(passport.decoded.roleName).includes("admin")) {
             navigate("/")
         }
     }, [tokenStorage])

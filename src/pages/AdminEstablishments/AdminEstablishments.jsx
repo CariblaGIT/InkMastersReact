@@ -12,11 +12,10 @@ export const AdminEstablishments = () => {
     const [tokenStorage, setTokenStorage] = useState(passport?.token);
     const [establishments, setEstablishments] = useState(undefined);
     const [loadedData, setLoadedData] = useState(false);
-    const adminRegexp = /\b(?:admin|super_admin)\b/;
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!tokenStorage || !adminRegexp.test(passport.decoded.roleName)) {
+        if (!tokenStorage || !(passport.decoded.roleName).includes("admin")) {
             navigate("/")
         }
     }, [tokenStorage])

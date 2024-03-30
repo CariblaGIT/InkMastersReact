@@ -6,11 +6,10 @@ import { Header } from "../../common/Header/Header"
 export const AdminPanel = () => {
     const passport = JSON.parse(localStorage.getItem("passport"))
     const [tokenStorage, setTokenStorage] = useState(passport?.token)
-    const adminRegexp = /\b(?:admin|super_admin)\b/
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!tokenStorage || !adminRegexp.test(passport.decoded.roleName)) {
+        if (!tokenStorage || !(passport.decoded.roleName).includes("admin")) {
             navigate("/")
         }
     }, [tokenStorage])
