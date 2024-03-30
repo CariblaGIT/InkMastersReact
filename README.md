@@ -81,6 +81,14 @@ This project is developed based on a previous [project](https://github.com/Carib
 
 <img align="center" src="./public/readme/appointments.png">
 
+<h4 align="center">Appointments interactions (like this in all entities)</h4>
+
+<img src="./public/readme/appointment-create.png">
+
+<img src="./public/readme/appointment-update.png">
+
+<img src="./public/readme/appointment-delete.png">
+
 <h4 align="center">Profile</h4>
 
 <img align="center" src="./public/readme/profile.png">
