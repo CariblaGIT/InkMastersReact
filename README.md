@@ -65,6 +65,24 @@ This project is developed based on a previous [project](https://github.com/Carib
 </a>
  </div>
 
+ ## 👨‍💻 Installation
+
+Follow the steps to emulate the project in your local device. But is not necessary because the project has been uploaded to AWS, so you can skip the installation and use the following URL to make all the consults in front of your localhost one: 
+<div align="center">
+<a href="https://cariblagit.github.io/InkMastersReact/">🚀 App deployed 🚀</a>
+</div>
+
+1. Clone repo
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+3. Launch the project in your local device:
+    ```bash
+    npm run dev
+    ```
+After that, in localhost:PORT, will be launched the application, and you will be on the landing page (Home)
+
 ## 🖥️ Views
 
 <h4 align="center">Initial interface</h4>
