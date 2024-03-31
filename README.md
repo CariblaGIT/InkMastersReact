@@ -67,7 +67,7 @@ This project is developed based on a previous [project](https://github.com/Carib
 
  ## 👨‍💻 Installation
 
-Follow the steps to emulate the project in your local device. But is not necessary because the project has been uploaded to AWS, so you can skip the installation and use the following URL to make all the consults in front of your localhost one: 
+Follow the steps to emulate the project in your local device. But is not necessary because the project has been uploaded to AWS, so you can skip the installation and use the following URL to make all the consults in front of your localhost one. <b>IMPORTANT : Actually is not on production de application, so for using it you must to follow the steps after the link, sorry for the problem. </b> 
 <div align="center">
 <a href="https://cariblagit.github.io/InkMastersReact/">🚀 App deployed 🚀</a>
 </div>
