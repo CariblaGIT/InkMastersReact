@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import "./FormDropdown.css"
+import "./FormDropdown.css";
+import { useEffect, useState } from "react";
 
 export const FormDropdown = ({array, dataType, name, labelText, selectedOption, onChange}) => {
     const [id, setId] = useState()

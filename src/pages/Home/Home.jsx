@@ -1,8 +1,8 @@
-import "./Home.css"
-import 'bootstrap/dist/css/bootstrap.css'
-import { useState, useEffect } from "react"
-import { Header } from "../../common/Header/Header"
-import { GetServices } from "../../services/services/getServices"
+import "./Home.css";
+import 'bootstrap/dist/css/bootstrap.css';
+import { useState, useEffect } from "react";
+import { Header } from "../../common/Header/Header";
+import { GetServices } from "../../services/apiCalls";
 import Carousel from 'react-bootstrap/Carousel';
 
 export const Home = () => {
@@ -13,17 +13,15 @@ export const Home = () => {
         const getServices = async () => {
             try {
                 const fetched = await GetServices();
-                setLoadedData(true);
-                setServices(fetched.data);
+                setLoadedData(true)
+                setServices(fetched.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
-        };
-    
-        if (!loadedData) {
-            getServices();
         }
-    }, []);
+    
+        if (!loadedData) { getServices() }
+    }, [])
 
     return (
         <div className="homeDesign">

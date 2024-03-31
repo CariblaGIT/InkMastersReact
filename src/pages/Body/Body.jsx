@@ -1,14 +1,14 @@
-import {Routes, Route, Navigate} from "react-router-dom"
-import { Home } from "../Home/Home"
-import { Register } from "../Register/Register"
-import { Login } from "../Login/Login"
-import { Profile } from "../Profile/Profile"
-import { UserAppointments } from "../UserAppointments/UserAppointments"
-import { AdminPanel } from "../AdminPanel/AdminPanel"
-import { AdminUsers } from "../AdminUsers/AdminUsers"
-import { AdminEstablishments } from "../AdminEstablishments/AdminEstablishments"
-import { AdminServices } from "../AdminServices/AdminServices"
-import { AdminRoles } from "../AdminRoles/AdminRoles"
+import {Routes, Route, Navigate} from "react-router-dom";
+import { Home } from "../Home/Home";
+import { Register } from "../Register/Register";
+import { Login } from "../Login/Login";
+import { Profile } from "../Profile/Profile";
+import { UserAppointments } from "../UserAppointments/UserAppointments";
+import { AdminPanel } from "../AdminPanel/AdminPanel";
+import { AdminUsers } from "../AdminUsers/AdminUsers";
+import { AdminEstablishments } from "../AdminEstablishments/AdminEstablishments";
+import { AdminServices } from "../AdminServices/AdminServices";
+import { AdminRoles } from "../AdminRoles/AdminRoles";
 
 export const Body = () => {
     return (

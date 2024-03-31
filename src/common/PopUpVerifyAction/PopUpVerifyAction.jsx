@@ -1,7 +1,7 @@
-import "./PopUpVerifyAction.css"
-import Modal from 'react-bootstrap/Modal'
-import { FormButton } from "../FormButton/FormButton"
-import { useState } from "react"
+import "./PopUpVerifyAction.css";
+import Modal from 'react-bootstrap/Modal';
+import { FormButton } from "../FormButton/FormButton";
+import { useState } from "react";
 
 export const PopUpVerifyAction = ({ entity, onHide, confirm, ...rest }) => {
     const [entityName, setEntityName] = useState(entity)

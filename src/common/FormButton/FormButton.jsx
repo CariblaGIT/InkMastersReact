@@ -1,4 +1,4 @@
-import "./FormButton.css"
+import "./FormButton.css";
 
 export const FormButton = ({buttonText, className, onClickFunction, disabled}) => {
     return (

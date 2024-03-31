@@ -1,7 +1,7 @@
-import "./AdminPanel.css"
-import { useNavigate } from "react-router"
-import { useState, useEffect } from "react"
-import { Header } from "../../common/Header/Header"
+import "./AdminPanel.css";
+import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { Header } from "../../common/Header/Header";
 
 export const AdminPanel = () => {
     const passport = JSON.parse(localStorage.getItem("passport"))

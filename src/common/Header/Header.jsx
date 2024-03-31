@@ -1,36 +1,35 @@
+import "./Header.css";
+import logo from '../../assets/logo.png';
 import Dropdown from 'react-bootstrap/Dropdown';
-import "./Header.css"
-import logo from '../../assets/logo.png'
-import { publicServer } from "../../services/config"
-
-import { useNavigate } from "react-router-dom"
-import { HeaderLinks } from "../HeaderLinks/HeaderLinks"
+import { useNavigate } from "react-router-dom";
+import { publicServer } from "../../services/config";
+import { HeaderLinks } from "../HeaderLinks/HeaderLinks";
 
 export const Header = () => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
+    const passport = JSON.parse(localStorage.getItem("passport"))
     const adminRegexp = /\b(?:admin|super_admin)\b/
 
     const navigate = useNavigate()
 
     const handleClickLogo = () => {
-        navigate("/");
+        navigate("/")
     }
 
     const handleProfileClick = () => {
-        navigate("/profile");
+        navigate("/profile")
     }
 
     const handleAppointmentsClick = () => {
-        navigate("/appointments");
+        navigate("/appointments")
     }
 
     const handleAdminClick = () => {
-        navigate("/admin-panel");
+        navigate("/admin-panel")
     }
 
     const handleLogoutClick = () => {
-        localStorage.removeItem("passport");
-        navigate("/");
+        localStorage.removeItem("passport")
+        navigate("/")
     }
 
     return(

@@ -1,14 +1,14 @@
-import "./Register.css"
-import { useState, useEffect } from "react"
-import { Header } from "../../common/Header/Header"
-import { FormInput } from "../../common/FormInput/FormInput"
-import { FormButton } from "../../common/FormButton/FormButton"
-import { validateRegisterData } from "../../utils/userDataValidations"
-import { RegisterUser } from "../../services/users/userRegister"
+import "./Register.css";
+import { useState, useEffect } from "react";
+import { Header } from "../../common/Header/Header";
+import { FormInput } from "../../common/FormInput/FormInput";
+import { FormButton } from "../../common/FormButton/FormButton";
+import { validateRegisterData } from "../../utils/userDataValidations";
+import { RegisterUser } from "../../services/apiCalls";
 import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const [user, setUser] = useState({
         fullname: "",
@@ -56,8 +56,8 @@ export const Register = () => {
         setUserError((prevState) => ({
             ...prevState,
             [e.target.name + "Error"]: error
-        }));
-    };
+        }))
+    }
 
     const RegisterUserCall = async () => {
         try {
@@ -68,7 +68,7 @@ export const Register = () => {
             setSuccess(true)
             setMsgSuccess(fetched.message + "\n" + "Redirecting to Login")
             setTimeout(() => {
-                navigate("/login");
+                navigate("/login")
               }, 2000);
         } catch (error) {
             setMsgSuccess(error.message)

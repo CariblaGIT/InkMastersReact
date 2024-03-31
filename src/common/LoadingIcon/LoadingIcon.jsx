@@ -1,4 +1,4 @@
-import "./LoadingIcon.css"
+import "./LoadingIcon.css";
 
 export const LoadingIcon = () => {
     return (
