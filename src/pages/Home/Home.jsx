@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Header } from "../../common/Header/Header";
 import { GetServices } from "../../services/apiCalls";
 import Carousel from 'react-bootstrap/Carousel';
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 
 export const Home = () => {
     const [services, setServices] = useState([])
@@ -37,7 +38,9 @@ export const Home = () => {
                 </div>
                 <div className="homeServices">
                         {!loadedData ? (
-                            <div>CARGANDO</div>
+                            <div>
+                                <LoadingIcon/>
+                            </div>
                         ) : (
                             <Carousel>
                                 {services.map((item) => {

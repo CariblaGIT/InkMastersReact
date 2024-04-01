@@ -23,6 +23,9 @@
 
 .homeHeader, .homeSubHeader{
     color:#fff;
+    text-shadow: 0 0 3px #000, 0 0 5px #000;
+    background-color: #1d1d1d6d;
+    width: 50vw;
     font-size: large;
     user-select: none;
     height: fit-content;
