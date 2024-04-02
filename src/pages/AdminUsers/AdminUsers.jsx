@@ -1,29 +1,27 @@
-import "./AdminUsers.css"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router"
-import { Header } from "../../common/Header/Header"
-import { GetUsers } from "../../services/users/userGetUsers"
-import { Table } from "react-bootstrap"
-import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
-import { PopUpUser } from "../../common/PopUpUser/PopUpUser"
-import { GetRoles } from "../../services/roles/roleGetRoles"
-import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction"
-import { DeleteUser } from "../../services/users/userDeleteUser"
-import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon"
+import "./AdminUsers.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Header } from "../../common/Header/Header";
+import { GetUsers, GetRoles, DeleteUser } from "../../services/apiCalls";
+import { Table } from "react-bootstrap";
+import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
+import { PopUpUser } from "../../common/PopUpUser/PopUpUser";
+import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction";
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 
 export const AdminUsers = () => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
-    const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [users, setUsers] = useState(undefined);
-    const [roles, setRoles] = useState(undefined);
-    const [loadedData, setLoadedData] = useState(false);
-    const [loadedRolesData, setLoadedRolesData] = useState(false);
-    const [modalCreateUserShow, setModalCreateUserShow] = useState(false);
-    const [modalUpdateUserShow, setModalUpdateUserShow] = useState(false);
-    const [verificationModal, setVerificationModal] = useState(false);
-    const [idAppInteracted, setIdAppInteracted] = useState(0);
-    const [indexAppToDelete, setIndexAppToDelete] = useState(0);
-    const [itemToUpdate, setItemToUpdate] = useState({});
+    const passport = JSON.parse(localStorage.getItem("passport"))
+    const [tokenStorage, setTokenStorage] = useState(passport?.token)
+    const [users, setUsers] = useState(undefined)
+    const [roles, setRoles] = useState(undefined)
+    const [loadedData, setLoadedData] = useState(false)
+    const [loadedRolesData, setLoadedRolesData] = useState(false)
+    const [modalCreateUserShow, setModalCreateUserShow] = useState(false)
+    const [modalUpdateUserShow, setModalUpdateUserShow] = useState(false)
+    const [verificationModal, setVerificationModal] = useState(false)
+    const [idAppInteracted, setIdAppInteracted] = useState(0)
+    const [indexAppToDelete, setIndexAppToDelete] = useState(0)
+    const [itemToUpdate, setItemToUpdate] = useState({})
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -35,25 +33,25 @@ export const AdminUsers = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const fetched = await GetUsers(tokenStorage);
-                setLoadedData(true);
-                setUsers(fetched.data);
+                const fetched = await GetUsers(tokenStorage)
+                setLoadedData(true)
+                setUsers(fetched.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
 
         const getRoles = async () => {
             try {
-                const fetched = await GetRoles(tokenStorage);
-                setLoadedRolesData(true);
-                setRoles(fetched.data);
+                const fetched = await GetRoles(tokenStorage)
+                setLoadedRolesData(true)
+                setRoles(fetched.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
-        if (!loadedData) { getUsers() };
-        if (!loadedRolesData) { getRoles() };
+        if (!loadedData) { getUsers() }
+        if (!loadedRolesData) { getRoles() }
     }, [])
 
     const backToAdmin = () => {
@@ -67,7 +65,7 @@ export const AdminUsers = () => {
     const closingAddUser = () => {
         setModalCreateUserShow(false)
         if(localStorage.getItem("createdUser")){
-            const newUser = JSON.parse(localStorage.getItem("createdUser"));
+            const newUser = JSON.parse(localStorage.getItem("createdUser"))
             const allUsers = users
             allUsers.push(newUser)
             setUsers(allUsers)

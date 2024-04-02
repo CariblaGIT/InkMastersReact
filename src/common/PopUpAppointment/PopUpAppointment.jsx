@@ -1,18 +1,17 @@
-import "./PopUpAppointment.css"
-import { useEffect, useState } from "react"
-import Modal from 'react-bootstrap/Modal'
-import { FormInput } from "../FormInput/FormInput"
-import { FormDropdown } from "../FormDropdown/FormDropdown"
-import { FormButton } from "../FormButton/FormButton"
-import { PostAppointment } from "../../services/appointments/postAppointments"
-import { UpdateAppointment } from "../../services/appointments/updateAppointments"
-import { FormatDate } from "../../utils/formatDate"
+import "./PopUpAppointment.css";
+import { useEffect, useState } from "react";
+import Modal from 'react-bootstrap/Modal';
+import { FormInput } from "../FormInput/FormInput";
+import { FormDropdown } from "../FormDropdown/FormDropdown";
+import { FormButton } from "../FormButton/FormButton";
+import { PostAppointment, UpdateAppointment } from "../../services/apiCalls";
+import { FormatDate } from "../../utils/formatDate";
 
 export const PopUpAppointment = (props) => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
-    const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [actualDate, setActualDate] = useState("");
-    const [disableAction, setDisableAction] = useState("disabled");
+    const passport = JSON.parse(localStorage.getItem("passport"))
+    const [tokenStorage, setTokenStorage] = useState(passport?.token)
+    const [actualDate, setActualDate] = useState("")
+    const [disableAction, setDisableAction] = useState("disabled")
 
     const [appointment, setAppointment] = useState({
         date: "",
@@ -58,13 +57,21 @@ export const PopUpAppointment = (props) => {
         let month = actualDate.getMonth() + 1
         let day = actualDate.getDate()
         const year = actualDate.getFullYear()
+        let hours = actualDate.getHours()
+        let mins = actualDate.getMinutes()
         if(month < 10){
-            month = '0' + month.toString();
+            month = '0' + month.toString()
         }
         if(day < 10){
-            day = '0' + day.toString();
+            day = '0' + day.toString()
         }
-        return year + '-' + month + '-' + day;
+        if(hours < 10){
+            hours = '0' + hours.toString()
+        }
+        if(mins < 10){
+            mins = '0' + mins.toString()
+        }
+        return year + '-' + month + '-' + day + " " + hours + ":" + mins
     }
 
     const saveNewAppointment = async () => {
@@ -73,7 +80,7 @@ export const PopUpAppointment = (props) => {
             if(fetched.success === false){
                 throw new Error(fetched.error)
             }
-            localStorage.setItem("createdAppointment", JSON.stringify(fetched.data));
+            localStorage.setItem("createdAppointment", JSON.stringify(fetched.data))
             props.onHide()
         } catch (error) {
             console.log(error.message)
@@ -86,7 +93,7 @@ export const PopUpAppointment = (props) => {
             if(fetched.success === false){
                 throw new Error(fetched.error)
             }
-            localStorage.setItem("updatedAppointment", JSON.stringify(fetched.data));
+            localStorage.setItem("updatedAppointment", JSON.stringify(fetched.data))
             props.onHide()
         } catch (error) {
             console.log(error.message)

@@ -12,7 +12,8 @@
     height: 88vh;
     width: 100vw;
 
-    background-color: #7f7f7f;
+    background-image: url("../../assets/vector_tattoos.png"),
+    linear-gradient(0deg, rgba(40,40,40,1) 0%, rgba(255,255,255,1) 100%);
 
     display: flex;
     flex-direction: column;
@@ -22,6 +23,9 @@
 
 .homeHeader, .homeSubHeader{
     color:#fff;
+    text-shadow: 0 0 3px #000, 0 0 5px #000;
+    background-color: #1d1d1d6d;
+    width: 50vw;
     font-size: large;
     user-select: none;
     height: fit-content;

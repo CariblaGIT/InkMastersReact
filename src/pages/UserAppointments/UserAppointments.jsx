@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import { Header } from "../../common/Header/Header"
-import { useNavigate } from "react-router-dom"
-import "./UserAppointments.css"
-import { GetAppointments } from "../../services/appointments/getAppointments"
-import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment"
-import { GetServices } from "../../services/services/getServices";
-import { GetTattoers } from "../../services/users/userGetTattoers";
-import { GetEstablishments } from "../../services/establishments/getEstablishments";
+import { Header } from "../../common/Header/Header";
+import { useNavigate } from "react-router-dom";
+import "./UserAppointments.css";
+import { GetAppointments, GetServices, GetTattoers, GetEstablishments, DeleteAppointment } from "../../services/apiCalls";
+import { PopUpAppointment } from "../../common/PopUpAppointment/PopUpAppointment";
 import { Table } from "react-bootstrap";
 import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
-import { DeleteAppointment } from "../../services/appointments/deleteAppointments";
 import { PopUpVerifyAction } from "../../common/PopUpVerifyAction/PopUpVerifyAction";
 import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 import { FormatDate } from "../../utils/formatDate";
@@ -33,25 +29,25 @@ export const UserAppointments = () => {
     const [indexAppToDelete, setIndexAppToDelete] = useState(0);
     const [itemToUpdate, setItemToUpdate] = useState({});
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!tokenStorage) {
-            navigate("/");
+            navigate("/")
         }
-    }, [tokenStorage]);
+    }, [tokenStorage])
 
     useEffect(() => {
         const getUserAppointments = async () => {
             try {
-                const fetched = await GetAppointments(tokenStorage);
-                setLoadedData(true);
-                setUserAppointments(fetched.data);
+                const fetched = await GetAppointments(tokenStorage)
+                setLoadedData(true)
+                setUserAppointments(fetched.data)
                 if(fetched.data.length > 0){
                     setAppointments(fetched.data)
                 }
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
 
@@ -59,36 +55,36 @@ export const UserAppointments = () => {
             try {
                 const fetchedServices = await GetServices();
                 setLoadedServicesData(true);
-                setServices(fetchedServices.data);
+                setServices(fetchedServices.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
 
         const getTattooersData = async () => {
             try {
-                const fetchedTattoers = await GetTattoers(tokenStorage);
-                setLoadedTattoersData(true);
-                setTattoers(fetchedTattoers.data);
+                const fetchedTattoers = await GetTattoers(tokenStorage)
+                setLoadedTattoersData(true)
+                setTattoers(fetchedTattoers.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
 
         const getEstablishmentsData = async () => {
             try {
-                const fetchedServices = await GetEstablishments();
-                setLoadedEstablishmentsData(true);
-                setEstablishments(fetchedServices.data);
+                const fetchedServices = await GetEstablishments()
+                setLoadedEstablishmentsData(true)
+                setEstablishments(fetchedServices.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
 
-        if (!loadedData) { getUserAppointments() };
-        if (!loadedServicesData) { getServicesData() };
-        if (!loadedTattoersData) { getTattooersData() };
-        if (!loadedEstablishmentsData) { getEstablishmentsData() };
+        if (!loadedData) { getUserAppointments() }
+        if (!loadedServicesData) { getServicesData() }
+        if (!loadedTattoersData) { getTattooersData() }
+        if (!loadedEstablishmentsData) { getEstablishmentsData() }
     }, [])
 
     const popupAddAppointment = () => {
@@ -98,9 +94,9 @@ export const UserAppointments = () => {
     const closingAddAppointment = () => {
         setModalShow(false)
         if(localStorage.getItem("createdAppointment")){
-            const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"));
+            const newAppointment = JSON.parse(localStorage.getItem("createdAppointment"))
             let newAppointmentDate = newAppointment.appointmentDate
-            newAppointmentDate += "Z";
+            newAppointmentDate += "Z"
             newAppointment.appointmentDate = newAppointmentDate
             if(newAppointment){
                 if(appointments.length > 0){
@@ -113,7 +109,7 @@ export const UserAppointments = () => {
                             setAppointments(allAppointments)
                             localStorage.removeItem("createdAppointment")
                             pushed = true
-                            break;
+                            break
                         }
                     }
                     if(!pushed){
@@ -170,6 +166,7 @@ export const UserAppointments = () => {
         setUpdateModal(false)
         if(localStorage.getItem("updatedAppointment")){
             const appointmentUpdated = JSON.parse(localStorage.getItem("updatedAppointment"))
+            appointmentUpdated.appointmentDate += "Z"
             appointments.map((item, index) => {
                 if(item === itemToUpdate){
                     appointments[index] = appointmentUpdated

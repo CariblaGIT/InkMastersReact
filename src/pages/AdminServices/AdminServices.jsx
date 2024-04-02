@@ -1,18 +1,18 @@
-import "./AdminServices.css"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router"
-import { Header } from "../../common/Header/Header"
-import { Table } from "react-bootstrap"
-import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
-import { GetServices } from "../../services/services/getServices"
-import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon"
+import "./AdminServices.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Header } from "../../common/Header/Header";
+import { Table } from "react-bootstrap";
+import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
+import { GetServices } from "../../services/apiCalls";
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 
 export const AdminServices = () => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
-    const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [services, setServices] = useState(undefined);
-    const [loadedData, setLoadedData] = useState(false);
-    const navigate = useNavigate();
+    const passport = JSON.parse(localStorage.getItem("passport"))
+    const [tokenStorage, setTokenStorage] = useState(passport?.token)
+    const [services, setServices] = useState(undefined)
+    const [loadedData, setLoadedData] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!tokenStorage || !(passport.decoded.roleName).includes("admin")) {
@@ -27,14 +27,14 @@ export const AdminServices = () => {
     useEffect(() => {
         const getServices = async () => {
             try {
-                const fetched = await GetServices();
-                setLoadedData(true);
-                setServices(fetched.data);
+                const fetched = await GetServices()
+                setLoadedData(true)
+                setServices(fetched.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
-        if (!loadedData) { getServices() };
+        if (!loadedData) { getServices() }
     })
 
     return (

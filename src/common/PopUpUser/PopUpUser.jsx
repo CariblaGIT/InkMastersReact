@@ -1,15 +1,15 @@
-import "./PopUpUser.css"
-import { useEffect, useState } from "react"
-import Modal from 'react-bootstrap/Modal'
-import { FormInput } from "../FormInput/FormInput"
-import { FormButton } from "../FormButton/FormButton"
-import { RegisterUser } from "../../services/users/userRegister"
-import { FormDropdown } from "../FormDropdown/FormDropdown"
+import "./PopUpUser.css";
+import { useEffect, useState } from "react";
+import Modal from 'react-bootstrap/Modal';
+import { FormInput } from "../FormInput/FormInput";
+import { FormButton } from "../FormButton/FormButton";
+import { RegisterUser } from "../../services/apiCalls";
+import { FormDropdown } from "../FormDropdown/FormDropdown";
 
 export const PopUpUser = (props) => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
-    const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [disableAction, setDisableAction] = useState("disabled");
+    const passport = JSON.parse(localStorage.getItem("passport"))
+    const [tokenStorage, setTokenStorage] = useState(passport?.token)
+    const [disableAction, setDisableAction] = useState("disabled")
 
     const [user, setUser] = useState({
         fullname: "",
@@ -56,7 +56,7 @@ export const PopUpUser = (props) => {
             if(fetched.success === false){
                 throw new Error(fetched.error)
             }
-            localStorage.setItem("createdUser", JSON.stringify(fetched.data));
+            localStorage.setItem("createdUser", JSON.stringify(fetched.data))
             props.onHide()
         } catch (error) {
             console.log(error.message)
@@ -69,7 +69,7 @@ export const PopUpUser = (props) => {
             if(fetched.success === false){
                 throw new Error(fetched.error)
             }
-            localStorage.setItem("updatedUser", JSON.stringify(fetched.data));
+            localStorage.setItem("updatedUser", JSON.stringify(fetched.data))
             props.onHide()
         } catch (error) {
             console.log(error.message)

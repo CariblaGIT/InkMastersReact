@@ -1,4 +1,4 @@
-import "./FormInput.css"
+import "./FormInput.css";
 
 export const FormInput = ({labelText, className, type, name, value, placeholder, disabled, min, onChange, onBlur}) => {
     return(

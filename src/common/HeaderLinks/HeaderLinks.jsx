@@ -1,6 +1,5 @@
-import "./HeaderLinks.css"
-
-import { useNavigate } from "react-router-dom"
+import "./HeaderLinks.css";
+import { useNavigate } from "react-router-dom";
 
 export const HeaderLinks = ({ linkText , destination }) => {
     const navigate = useNavigate()

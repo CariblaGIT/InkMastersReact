@@ -1,24 +1,23 @@
-import "./Login.css"
-import { useState, useEffect } from "react"
-import { FormInput } from "../../common/FormInput/FormInput"
-import { FormButton } from "../../common/FormButton/FormButton"
-import { Header } from "../../common/Header/Header"
-import { LoginUser } from "../../services/users/userLogin"
-import { useNavigate } from "react-router-dom"
-import { decodeToken } from "react-jwt"
+import "./Login.css";
+import { useState, useEffect } from "react";
+import { FormInput } from "../../common/FormInput/FormInput";
+import { FormButton } from "../../common/FormButton/FormButton";
+import { Header } from "../../common/Header/Header";
+import { LoginUser } from "../../services/apiCalls";
+import { useNavigate } from "react-router-dom";
+import { decodeToken } from "react-jwt";
 
 export const Login = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const adminRegexp = /\b(?:admin|super_admin)\b/
+    const [success, setSuccess] = useState(false)
+    const [notAllowToLogin, setNotAllowToLogin] = useState(true)
+    const [msgSuccess, setMsgSuccess] = useState("")
 
     const [credentials, setCredentials] = useState({
         email: "",
         password: ""
     })
-
-    const [success, setSuccess] = useState(false)
-    const [notAllowToLogin, setNotAllowToLogin] = useState(true)
-    const [msgSuccess, setMsgSuccess] = useState("")
 
     useEffect(() => {
         if(credentials.email !== "" && credentials.password !== ""){
@@ -50,18 +49,18 @@ export const Login = () => {
                 decoded: decodedToken,
             };
 
-            localStorage.setItem("passport", JSON.stringify(passport));
+            localStorage.setItem("passport", JSON.stringify(passport))
             
             if(adminRegexp.test(passport.decoded.roleName)){
                 setMsgSuccess(fetched.message + "\n" + "Redirecting to admin panel")
                 setTimeout(() => {
-                    navigate("/admin-panel");
-                }, 2000);
+                    navigate("/admin-panel")
+                }, 2000)
             } else {
                 setMsgSuccess(fetched.message + "\n" + "Redirecting to your appointments")
                 setTimeout(() => {
-                    navigate("/appointments");
-                }, 2000);
+                    navigate("/appointments")
+                }, 2000)
             }
         } catch (error) {
             setSuccess(false)

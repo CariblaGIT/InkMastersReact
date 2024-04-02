@@ -1,18 +1,18 @@
-import "./AdminRoles.css"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router"
-import { Header } from "../../common/Header/Header"
-import { Table } from "react-bootstrap"
-import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton"
-import { GetRoles } from "../../services/roles/roleGetRoles"
-import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon"
+import "./AdminRoles.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Header } from "../../common/Header/Header";
+import { Table } from "react-bootstrap";
+import { EntryActionButton } from "../../common/EntryActionButton/EntryActionButton";
+import { GetRoles } from "../../services/apiCalls";
+import { LoadingIcon } from "../../common/LoadingIcon/LoadingIcon";
 
 export const AdminRoles = () => {
-    const passport = JSON.parse(localStorage.getItem("passport"));
-    const [tokenStorage, setTokenStorage] = useState(passport?.token);
-    const [roles, setRoless] = useState(undefined);
-    const [loadedData, setLoadedData] = useState(false);
-    const navigate = useNavigate();
+    const passport = JSON.parse(localStorage.getItem("passport"))
+    const [tokenStorage, setTokenStorage] = useState(passport?.token)
+    const [roles, setRoless] = useState(undefined)
+    const [loadedData, setLoadedData] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!tokenStorage || !(passport.decoded.roleName).includes("admin")) {
@@ -27,14 +27,14 @@ export const AdminRoles = () => {
     useEffect(() => {
         const getRoles = async () => {
             try {
-                const fetched = await GetRoles(tokenStorage);
-                setLoadedData(true);
-                setRoless(fetched.data);
+                const fetched = await GetRoles(tokenStorage)
+                setLoadedData(true)
+                setRoless(fetched.data)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         }
-        if (!loadedData) { getRoles() };
+        if (!loadedData) { getRoles() }
     })
 
     return (

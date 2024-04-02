@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react"
-import { Header } from "../../common/Header/Header"
-import { useNavigate } from "react-router-dom"
-import "./Profile.css"
-import { GetProfile } from "../../services/users/userGetProfile"
-import { FormInput } from "../../common/FormInput/FormInput"
-import { publicServer } from "../../services/config"
-import { FormButton } from "../../common/FormButton/FormButton"
-import { validateRegisterData } from "../../utils/userDataValidations"
-import { UpdateProfileWithAvatar, UpdateProfileWithoutAvatar } from "../../services/users/userUpdateProfile"
+import { useEffect, useState } from "react";
+import { Header } from "../../common/Header/Header";
+import { useNavigate } from "react-router-dom";
+import "./Profile.css";
+import { GetProfile, UpdateProfileWithAvatar, UpdateProfileWithoutAvatar } from "../../services/apiCalls";
+import { FormInput } from "../../common/FormInput/FormInput";
+import { publicServer } from "../../services/config";
+import { FormButton } from "../../common/FormButton/FormButton";
+import { validateRegisterData } from "../../utils/userDataValidations";
 
 export const Profile = () => {
     const passport = JSON.parse(localStorage.getItem("passport"))
@@ -16,8 +15,10 @@ export const Profile = () => {
     const [tokenStorage, setTokenStorage] = useState(passport?.token)
     const [loadedData, setLoadedData] = useState(false)
     const [write, setWrite] = useState("disabled")
-    const [avatarToUpload, setAvatarToUpload] = useState(undefined);
+    const [avatarToUpload, setAvatarToUpload] = useState(undefined)
     const [avatar, setAvatar] = useState(publicServer + passport?.decoded.avatar)
+    const [msgUploadedFile, setMsgUploadedFile] = useState("")
+    const [msgUpdatedProfile, setMsgUpdatedProfile] = useState("")
 
     const [user, setUser] = useState({
         fullname: "",
@@ -40,8 +41,31 @@ export const Profile = () => {
         avatarError: ""
     })
 
-    const [msgUploadedFile, setMsgUploadedFile] = useState("")
-    const [msgUpdatedProfile, setMsgUpdatedProfile] = useState("")
+    useEffect(() => {
+        if (!tokenStorage) {
+            navigate("/")
+        }
+    }, [tokenStorage])
+
+    useEffect(() => {
+        const getUserProfile = async () => {
+            try {
+                const fetched = await GetProfile(tokenStorage)
+                setLoadedData(true)
+        
+                setUser({
+                    fullname: fetched.data.fullname,
+                    username: fetched.data.username,
+                    email: fetched.data.email,
+                    avatar: fetched.data.avatar
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    
+        if (!loadedData) { getUserProfile() }
+    }, [user])
 
     const profileInputHandler = (e) => {
         setUser((prevState) => ({
@@ -56,45 +80,15 @@ export const Profile = () => {
         setUserError((prevState) => ({
             ...prevState,
             [e.target.name + "Error"]: error
-        }));
-    };
+        }))
+    }
 
     const handleFileChange = (e) => {
         if (e.target.files) {
             setAvatarToUpload(e.target.files[0])
             setMsgUploadedFile("File retrieved, save to change avatar")
         }
-    };
-
-    useEffect(() => {
-        if (!tokenStorage) {
-            navigate("/")
-        }
-    }, [tokenStorage])
-
-    useEffect(() => {
-        const getUserProfile = async () => {
-            try {
-                const fetched = await GetProfile(tokenStorage);
-        
-                setLoadedData(true);
-        
-                setUser({
-                    fullname: fetched.data.fullname,
-                    username: fetched.data.username,
-                    email: fetched.data.email,
-                    avatar: fetched.data.avatar
-                });
-    
-            } catch (error) {
-                console.log(error);
-            }
-        };
-    
-        if (!loadedData) {
-            getUserProfile();
-        }
-    }, [user]);
+    }
 
     const activateUpdate = () => {
         setWrite("")
@@ -121,8 +115,8 @@ export const Profile = () => {
                 setMsgUpdatedProfile("Updated profile successfully")
                 setWrite("disabled")
                 setTimeout(() => {
-                    setMsgUpdatedProfile("");
-                }, 2000);
+                    setMsgUpdatedProfile("")
+                }, 2000)
             } else {
                 const fetched = await UpdateProfileWithAvatar(tokenStorage, user, avatarToUpload)
                 const newUserData = {
@@ -144,8 +138,8 @@ export const Profile = () => {
                 setMsgUploadedFile("")
                 setMsgUpdatedProfile("Updated profile successfully")
                 setTimeout(() => {
-                    setMsgUpdatedProfile("");
-                }, 2000);
+                    setMsgUpdatedProfile("")
+                }, 2000)
             }
         } catch (error) {
             console.log(error)
