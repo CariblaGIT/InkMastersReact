@@ -25,5 +25,7 @@ export const validateRegisterData = (type, value) => {
                 return "No correct password inserted"
             }
             break;
+        default:
+            return "No error"
     }
 }

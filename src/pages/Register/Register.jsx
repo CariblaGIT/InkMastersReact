@@ -30,10 +30,10 @@ export const Register = () => {
 
     useEffect(() => {
         if(user.fullname !== "" && user.username !== "" && user.email !== "" && user.password !== ""){
-            if((userError.fullnameError === undefined) && 
-            (userError.usernameError === undefined) && 
-            (userError.emailError === undefined) && 
-            (userError.passwordError === undefined)){
+            if((userError.fullnameError === undefined || "") && 
+            (userError.usernameError === undefined || "") && 
+            (userError.emailError === undefined || "") && 
+            (userError.passwordError === undefined || "")){
                 setNotAllowToRegister(false)
             } else {
                 setNotAllowToRegister(true)
@@ -41,22 +41,22 @@ export const Register = () => {
         } else {
             setNotAllowToRegister(true)
         }
-    }, [userError])
+    }, [user])
 
     const registerInputHandler = (e) => {
         setUser((prevState) => ({
             ...prevState,
             [e.target.name] : e.target.value
         }))
-    }
 
-    const checkInputError = (e) => {
         const error = validateRegisterData(e.target.name, e.target.value);
     
-        setUserError((prevState) => ({
-            ...prevState,
-            [e.target.name + "Error"]: error
-        }))
+        if(error !== "No error"){
+            setUserError((prevState) => ({
+                ...prevState,
+                [e.target.name + "Error"]: error
+            }))
+        }
     }
 
     const RegisterUserCall = async () => {
@@ -91,7 +91,6 @@ export const Register = () => {
                     placeholder={"Write your entire name"}
                     value={user.fullname || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.fullnameError}</div>
                 <FormInput
@@ -102,7 +101,6 @@ export const Register = () => {
                     placeholder={"Write a username"}
                     value={user.username || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.usernameError}</div>
                 <FormInput
@@ -113,7 +111,6 @@ export const Register = () => {
                     placeholder={"Write an email"}
                     value={user.email || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.emailError}</div>
                 <FormInput
@@ -124,7 +121,6 @@ export const Register = () => {
                     placeholder={"Write a password"}
                     value={user.password || ""}
                     onChange={e => registerInputHandler(e)}
-                    onBlur={e => checkInputError(e)}
                 />
                 <div className="inputError">{userError.passwordError}</div>
                 <FormButton

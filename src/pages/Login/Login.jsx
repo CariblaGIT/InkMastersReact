@@ -85,7 +85,6 @@ export const Login = () => {
                     disabled={""}
                     value={credentials.email || ""}
                     onChange={e => loginInputHandler(e)}
-                    onBlur={() => {}}
                 />
                 <FormInput
                     labelText={"password"}
@@ -96,7 +95,6 @@ export const Login = () => {
                     disabled={""}
                     value={credentials.password || ""}
                     onChange={e => loginInputHandler(e)}
-                    onBlur={() => {}}
                 />
                 <FormButton
                     buttonText={"LOGIN"}
